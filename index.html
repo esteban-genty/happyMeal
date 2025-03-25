@@ -8,7 +8,80 @@
     <meta name="author" content="Estéban, Sébastien, Lamine, Idryss"> <!-- Author -->
     <title>HappyMeal - Accueil</title> <!-- Website Title -->
 </head>
-<body>
+<body class="bg-[#f8f1e4] text-gray-900 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="w-full bg-white py-4 px-6 flex items-center justify-between shadow-md">
+        <img src="../assets/logo-transparent-svg.svg" alt="logo" class="h-12">
+        <nav class="flex justify-center flex-1 space-x-8">
+            <a href="#" class="text-black px-6 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition">Planning</a>
+            <a href="#" class="text-black px-6 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition">Favoris</a>
+            <a href="#" class="text-black px-6 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition">Recettes</a>
+            <a href="#" class="text-black px-6 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition">Courses</a>
+        </nav>
+        <a href="#" class="bg-orange-300 text-black px-4 py-2   hover:bg-orange-400 transition shadow-xl">
+            Voir toutes les recettes
+
+        </a>
+    </header>
+    
+    <!-- Hero Section --> 
+    <div class="relative w-full h-[300px] bg-black">
+        <img src="../assets/accueil.jpg" class="w-full h-full object-cover opacity-60" alt="Recettes">
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center">
+            <h1 class="text-4xl font-bold">Toutes les recettes</h1>
+            <!-- Barre de recherche -->
+<div class="relative w-96 mt-4">
+    <div class="bg-white flex items-center px-4 py-2 rounded-full shadow-md w-full focus-within:ring-2 focus-within:ring-amber-400 transition-all">
+        <svg class="w-5 h-5 text-gray-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input id="search-bar" type="text" placeholder="Rechercher une recette..." class="w-full outline-none text-gray-700">
+    </div>
+
+    <!-- Suggestions -->
+    <ul id="suggestions" class="absolute left-0 w-full bg-cyan-600 hover:bg-cyan-600 shadow-lg rounded-md mt-1 hidden z-10">
+       
+    </ul>
+    
+    <!-- Suggestions -->
+</div>
+
+        </div>
+    </div>
+    <!-- Section Recettes -->
+    <section id="recipes-container" class="py-10 flex justify-center gap-8 flex-wrap"></section>
+
+    <!-- Modal -->
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-[#F5E6DA] p-6 rounded-lg w-[40rem] shadow-lg border border-black relative">
+            <button onclick="closeModal()" class="absolute top-2 right-2 text-xl font-bold">✕</button>
+            
+            <div class="bg-amber-400 px-4 py-2 rounded-lg shadow-md text-lg font-bold text-black w-fit">
+                <h2 id="modal-title"></h2>
+            </div>
+            
+            <p class="mt-2 text-gray-800"><strong>Temps :</strong> <span id="modal-time"></span></p>
+            
+            <h3 class="mt-4 text-lg font-bold">Préparation</h3>
+            <p id="modal-prep" class="mt-2 text-gray-700"></p>
+            
+            <h3 class="mt-4 text-lg font-bold underline">Ingrédients</h3>
+            <div id="modal-ingredients" class="flex flex-wrap gap-2 mt-2"></div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <script src="../JS/accueil.js"></script>
+
+
+    <footer class="bg-white-900 text-black text-center p-4 opacity-70 font-['Judson']">
+        <p>Réalisé par Esteban, Sébastien, Idryss et Lamine</p>
+    </footer>
+    
+</body>
+</html>
 
 
 
