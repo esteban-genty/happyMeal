@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
             recipes.forEach((recipe, index) => {
                 const card = document.createElement("div");
-                card.className = "recipe-card bg-[#4D3B39] p-6 rounded-xl shadow-lg w-64 relative opacity-0 translate-y-4 transition-all duration-500  w-[500px] ";
+                card.className = "recipe-card p-6 rounded-lg w-64 relative opacity-0 translate-y-4 transition-all duration-500  w-[500px] ";
                 
         
                 const previewIngredients = formatIngredients(recipe.ingredients, 2);
@@ -48,28 +48,29 @@ document.addEventListener("DOMContentLoaded", () => {
         
                 //pour afficher du html        
                 card.innerHTML = `
-                <div class="w-full max-w-lg  rounded-xl shadow-lg overflow-hidden">
-                    <h1 class="text-white text-xl font-bold p-4">${recipe.categorie}</h1> 
-                    <h2 class="text-lg font-semibold text-white px-4">${recipe.nom}</h2>
-                    <hr class="border-t-2 border-black my-4 mx-4">
-                    <img src="${recipe.image}" class="w-full h-48 object-cover"> 
-                    
-                    <div class="bg-white p-4 rounded-b-xl shadow-inner flex justify-between items-center">
-                        <div>
-                            <p class="text-black font-bold text-sm">Temps :</p>
-                            <p class="text-black text-sm">${recipe.temps_preparation}</p>
-                        </div>
-                        <button 
-                            class="bg-amber-400 hover:bg-amber-500 text-black font-semibold px-4 py-2 rounded-lg shadow-md open-modal hover:bg-[B9625D] "
-                            data-title="${recipe.nom}"
-                            data-ingredients="${formatIngredients(recipe.ingredients)}"
-                            data-instructions="${formatSteps(recipe.etapes)}"
-                            data-time="${recipe.temps_preparation || 'Non spécifié'}">
-                            Voir plus
-                        </button>
-                    </div>
-                </div>
-            `;
+     <div class="relative h-64 overflow-hidden">
+            <img 
+                src="${recipe.image}" 
+                alt="${recipe.nom}" 
+                class="w-full h-full object-cover"
+            >
+            <div class="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-3 py-1 rounded-md">
+                ${recipe.nom}
+            </div>
+            <div class="absolute top-3 right-3 bg-white bg-opacity-80 px-3 py-1 rounded-md">
+                ${recipe.categorie}
+            </div>
+        </div>
+        <div class="flex justify-between items-center p-4 bg-gray-100">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500">Temps :</span>
+                <span class="text-gray-700">${recipe.temps_preparation}</span>
+            </div>
+            <button class="bg-orange-300 text-white px-4 py-2 rounded-md font-bold hover:bg-orange-600 transition-colors">
+                Enregistrer
+            </button>
+        </div>
+        `;
             
         
                 container.appendChild(card);
