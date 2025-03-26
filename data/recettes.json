@@ -5,14 +5,15 @@
           "nom":"Poulet rôti aux herbes",
           "categorie":"Plat principal",
           "temps_preparation":"1 heure",
+          "image":"assets/logos/poullets-rotis-aux-herbes.jpg",
           "ingredients":[
              {
                 "nom":"Poulet",
-                "quantite":"1"
+                "quantite":"500g"
              },
              {
                 "nom":"Herbes fraîches",
-                "quantite":"1"
+                "quantite":"5 feuilles"
              },
              {
                 "nom":"Sel et poivre",
@@ -35,6 +36,7 @@
           "nom":"Salade de quinoa aux légumes grillés",
           "categorie":"Entrée",
           "temps_preparation":"30 minutes",
+          "image":"assets/logos/salade-de-quinoa-aux-legumes.jpg",
           "ingredients":[
              {
                 "nom":"quinoa",
@@ -42,7 +44,7 @@
              },
              {
                 "nom":"Poivron",
-                "quantite":"3"
+                "quantite":"3 piéces"
              },
              {
                 "nom":"Sel et poivre",
@@ -73,14 +75,15 @@
           "nom":"Tarte aux pommes",
           "categorie":"Dessert",
           "temps_preparation":"1 heure",
+          "image":"assets/logos/tarte-aux-pommes1.jpg",
           "ingredients":[
              {
                 "nom":"Pâte brisée",
-                "quantite":"1"
+                "quantite":"100g"
              },
              {
                 "nom":"Pomme",
-                "quantite":"3"
+                "quantite":"3 piéces"
              },
              {
                 "nom":"Sucre",
@@ -113,6 +116,7 @@
           "nom":"Soupe de lentilles",
           "categorie":"Entrée",
           "temps_preparation":"1 heure",
+          "image":"assets/logos/soupelentilles.jpg",
           "ingredients":[
              {
                 "nom":"Lentille",
@@ -120,7 +124,7 @@
              },
              {
                 "nom":"Oignon",
-                "quantite":"3"
+                "quantite":"3 piéces"
              },
              {
                 "nom":"Carottes",
@@ -153,6 +157,7 @@
           "nom":"Pâtes Carbonara",
           "categorie":"Plat principal",
           "temps_preparation":"20 minutes",
+          "image":"assets/logos/pates-carbonara.jpg",
           "ingredients":[
              {
                 "nom":"Pates",
@@ -164,7 +169,7 @@
              },
              {
                 "nom":"Oeuf",
-                "quantite":"3"
+                "quantite":"3 piéces"
              },
              {
                 "nom":"Parmesan",
@@ -194,6 +199,7 @@
           "nom":"Risotto aux champignons",
           "categorie":"Plat principal",
           "temps_preparation":"40 minutes",
+          "image":"assets/logos/risotto-champignons.jpeg",
           "ingredients":[
              {
                 "nom":"Riz",
@@ -201,7 +207,7 @@
              },
              {
                 "nom":"Oigons",
-                "quantite":"3"
+                "quantite":"3 piéces"
              },
              {
                 "nom":"Vin blanc",
@@ -237,11 +243,25 @@
           "nom":"Salade de fruits frais",
           "categorie":"Dessert",
           "temps_preparation":"20 minutes",
+          "image":"assets/logos/salade-de-fruits.jpg",
           "ingredients":[
-             "Fruits variés (fraises, kiwis, oranges, raisins, etc.), coupés en morceaux",
-             "Jus d'orange ou de citron",
-             "Miel ou sirop d'érable (facultatif)",
-             "Feuilles de menthe fraîche pour garnir"
+            {
+               "nom":"Fruits variés",
+               "quantite":"300g"
+            },
+            {
+               "nom":"Jus d'orange",
+               "quantite":"25cl"
+            },
+            {
+               "nom":"Miel ou sirop",
+               "quantite":"5cl"
+            },
+            {
+               "nom":"Feuilles de menthe fraiche pour garnir",
+               "quantite":"5 feuilles"
+            }
+            
           ],
           "etapes":[
              "Coupez tous les fruits en morceaux de taille similaire et placez-les dans un grand bol.",
@@ -256,26 +276,27 @@
           "nom":"Ratatouille provençale",
           "categorie":"Plat principal",
           "temps_preparation":"1 heure",
+          "image":"assets/logos/ratatouilles-provencale.jpg",
           "ingredients":[
              {
                 "nom":"Aubergine",
-                "quantite":"1"
+                "quantite":"1 piéces"
              },
              {
                 "nom":"Courgette",
-                "quantite":"3"
+                "quantite":"3 piéces"
              },
              {
                 "nom":"Poivron",
-                "quantite":"2"
+                "quantite":"2 piéces"
              },
              {
                 "nom":"Tomate",
-                "quantite":"4"
+                "quantite":"4 piéces"
              },
              {
                 "nom":"Oignon",
-                "quantite":"2"
+                "quantite":"2 piéces"
              },
              {
                 "nom":"Huile d'olive",
@@ -297,14 +318,15 @@
           "nom":"Salade César",
           "categorie":"Entrée",
           "temps_preparation":"20 minutes",
+          "image":"assets/logos/salade-cesar.jpg",
           "ingredients":[
              {
                 "nom":"Laitue",
-                "quantite":"1"
+                "quantite":"1 piéces"
              },
              {
                 "nom":"Poulet",
-                "quantite":"1"
+                "quantite":"1 piéces"
              },
              {
                 "nom":"Crouton",
@@ -336,6 +358,7 @@
           "nom":"Risotto aux champignons",
           "categorie":"Plat principal",
           "temps_preparation":"40 minutes",
+          "image":"assets/logos/risotto-champignons.jpeg",
           "ingredients":[
              {
                 "nom":"Riz",
@@ -347,7 +370,7 @@
              },
              {
                 "nom":"Oignons",
-                "quantite":"3"
+                "quantite":"3 piéces"
              },
              {
                 "nom":"Vin blanc",
@@ -379,6 +402,7 @@
           "nom":"Muffins aux myrtilles",
           "categorie":"Dessert",
           "temps_preparation":"30 minutes",
+          "image":"assets/logos/muffins-myrtilles.jpg",
           "ingredients":[
              {
                 "nom":"Farine",
@@ -390,7 +414,7 @@
              },
              {
                 "nom":"Levure",
-                "quantite":"1"
+                "quantite":"10g"
              },
              {
                 "nom":"Lait",
@@ -398,7 +422,7 @@
              },
              {
                 "nom":"Oeuf",
-                "quantite":"1"
+                "quantite":"1 piéces"
              },
              {
                 "nom":"Mirtilles",
@@ -420,6 +444,7 @@
           "nom":"Lasagnes végétariennes",
           "categorie":"Plat principal",
           "temps_preparation":"1 heure 30 minutes",
+          "image":"assets/logos/lasagnes.jpg",
           "ingredients":[
              {
                 "nom":"Pâte",
@@ -427,15 +452,15 @@
              },
              {
                 "nom":"Aubergine",
-                "quantite":"3"
+                "quantite":"3piéces"
              },
              {
                 "nom":"Courgette",
-                "quantite":"5"
+                "quantite":"5 piéces"
              },
              {
                 "nom":"Poivon",
-                "quantite":"3"
+                "quantite":"3 piéces"
              },
              {
                 "nom":"Beurre",
@@ -462,26 +487,27 @@
           "nom":"Salade niçoise",
           "categorie":"Entrée",
           "temps_preparation":"20 minutes",
+          "image":"assets/logos/salade-nicoise.jpg",
           "ingredients":[
              {
                 "nom":"Laitue",
-                "quantite":"1"
+                "quantite":"1 piéces"
              },
              {
                 "nom":"Thon",
-                "quantite":"3"
+                "quantite":"3 piéces"
              },
              {
                 "nom":"Oeuf",
-                "quantite":"3"
+                "quantite":"3 piéces"
              },
              {
                 "nom":"Tomates",
-                "quantite":"4"
+                "quantite":"4 piéces"
              },
              {
                 "nom":"Poivron",
-                "quantite":"4"
+                "quantite":"4 piéces"
              },
              {
                 "nom":"Haricot verts",
@@ -505,6 +531,7 @@
           "nom":"Tiramisu",
           "categorie":"Dessert",
           "temps_preparation":"30 minutes (+ temps de repos)",
+          "image":"assets/logos/tiramisu.jpg",
           "ingredients":[
              {
                 "nom":"Mascarpone",
@@ -512,7 +539,7 @@
              },
              {
                 "nom":"Oeuf",
-                "quantite":"3"
+                "quantite":"3 piéces"
              },
              {
                 "nom":"Sucre",
@@ -520,7 +547,7 @@
              },
              {
                 "nom":"Vanille",
-                "quantite":"1"
+                "quantite":"10g"
              },
              {
                 "nom":"Café",
