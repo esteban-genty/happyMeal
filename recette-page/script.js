@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="text-xs text-gray-500">Temps :</span>
                 <span class="text-gray-700">${recette.temps_preparation}</span>
             </div>
-            <button class="bg-orange-300 text-white px-4 py-2 rounded-md font-bold hover:bg-orange-600 transition-colors">
+            <button class="bg-orange-300 text-white px-4 py-2 rounded-md font-bold hover:bg-orange-400 transition-colors">
                 Enregistrer
             </button>
         </div>
