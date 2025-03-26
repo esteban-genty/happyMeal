@@ -3,205 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bon Repas - Toutes les recettes</title>
-    <link rel="stylesheet" href="recette.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>HappyMeal - Toutes les recettes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <img src="logo.png" alt="Bon Repas Logo">
-            </div>
-            <div class="nav-actions">
-                <button class="btn-primary">
-                    <i class="fas fa-eye"></i> voir toutes les recettes
-                </button>
-            </div>
-        </nav>
+<body class="bg-[#f8f1e4] min-h-screen font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+            <img src="../assets/logos/logo-transparent-svg.svg" alt="HappyMeal Logo" class="h-12">
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="text-black px-6 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition">Planning</a>
+                <a href="#" class="text-black px-6 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition">Favoris</a>
+                <a href="#" class="text-black px-6 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition">Recettes</a>
+                <a href="#" class="text-black px-6 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition">Courses</a>
+            </nav>
+            <a href="#" class="bg-orange-300 text-black px-4 py-2 hover:bg-orange-400 transition shadow-xl">
+                Voir toutes les recettes
+            </a>
+        </div>
     </header>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Toutes les recettes</h1>
-            </div>
-        </section>
+    <!-- Hero Section -->
+    <div class="relative h-[300px] bg-black">
+        <img src="img/chp.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60" alt="Recettes">
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center">
+            <h1 class="text-4xl font-bold">Toutes les recettes</h1>
+        </div>
+    </div>
 
-        <section class="recipes-grid">
-            <div class="recipe-card">
-                <div class="tag">Plat</div>
-                <div class="recipe-content">
-                    <div class="recipe-ingredients">
-                        <h3>Ingrédients :</h3>
-                        <ul>
-                            <li>Poulet</li>
-                            <li>Herbes fraîches</li>
-                            <li>Sel et poivre</li>
-                            <li>Huile d'olive</li>
-                        </ul>
+    <!-- Main Content -->
+    <div class="flex">
+
+    <!-- Conteneur des cartes -->
+    <div class="w-full lg:w-3/4 p-4 grid grid-cols-4 gap-4">
+    <!-- Cartes de recettes -->
+    <div class="bg-[#574848] rounded-lg p-4 text-white">
+        <h2 class="text-lg font-bold mb-2">Poulet rôti aux herbes</h2>
+        <div class="mb-2"><strong>Ingrédients:</strong></div>
+        <div class="mb-2"><strong>Préparation:</strong></div>
+        <div class="flex justify-between items-center">
+            <span>Temps: 10 mins</span>
+            <button class="bg-yellow-400 text-black px-3 py-1 rounded">Enregistrer</button>
+        </div>
+    </div>
+    
+    <!-- Répéter d'autres cartes -->
+    <div class="bg-[#574848] rounded-lg p-4"></div>
+    <div class="bg-[#574848] rounded-lg p-4"></div>
+    <div class="bg-[#574848] rounded-lg p-4"></div>
+    <div class="bg-[#574848] rounded-lg p-4"></div>
+    <div class="bg-[#574848] rounded-lg p-4"></div>
+    <div class="bg-[#574848] rounded-lg p-4"></div>
+    <div class="bg-[#574848] rounded-lg p-4"></div>
+
+    <!-- Pagination centrée sous les cartes -->
+    <div class="col-span-4 flex justify-center mt-4 pb-4">
+        <button class="px-4 py-2">← Previous</button>
+        <span class="px-4 py-2 bg-black text-white">1</span>
+        <span class="px-4 py-2">2</span>
+        <button class="px-4 py-2">Next →</button>
+    </div>
+</div>
+
+
+
+        <!-- Sidebar -->
+        <div class="hidden lg:block w-1/4 p-4 bg-[#574848]">
+            <div class="bg-[#574848] rounded-lg">
+                <div class="p-5">
+                    <div class="bg-white rounded-lg border mb-10">
+                        <div class="flex items-center px-3 py-4 text-black-500">
+                            <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <input type="text" placeholder="Rechercher" class="w-full outline-none">
+                        </div>
                     </div>
-                    <div class="recipe-preparation">
-                        <h3>Préparation :</h3>
-                        <ol>
-                            <li>Préchauffez le four à 200°C.</li>
-                            <li>Nettoyez le poulet et assaisonnez-le.</li>
-                            <li>Badigeonnez le poulet d'huile d'olive.</li>
-                            <li>Enfournez pendant environ 1 heure.</li>
-                            <li>Laissez reposer avant de servir.</li>
-                        </ol>
-                    </div>
-                    <div class="recipe-time">
-                        <span>Temps :</span>
-                        <span>1 heure</span>
-                        <button class="save-btn">Enregistrer</button>
+
+                    <div class="space-y-2">
+                        <div class="bg-[#B9625D] text-white rounded-lg py-3 px-4 flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Tout les plats
+                        </div>
+                        <div class="bg-white rounded-lg py-2 px-4 flex items-center text-gray-700">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Plat Principal
+                        </div>
+                        <div class="bg-white rounded-lg py-2 px-4 flex items-center text-gray-700">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Entrée
+                        </div>
+                        <div class="bg-white rounded-lg py-2 px-4 flex items-center text-gray-700">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Dessert
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="recipe-card">
-                <div class="tag">Plat</div>
-                <div class="recipe-content">
-                    <div class="recipe-ingredients">
-                        <h3>Ingrédients :</h3>
-                        <ul>
-                            <li>Pâtes</li>
-                            <li>Lardons</li>
-                            <li>Œufs</li>
-                            <li>Parmesan</li>
-                            <li>Huile d'olive</li>
-                        </ul>
-                    </div>
-                    <div class="recipe-preparation">
-                        <h3>Préparation :</h3>
-                        <ol>
-                            <li>Cuire les pâtes al dente.</li>
-                            <li>Faire revenir les lardons.</li>
-                            <li>Fouetter les jaunes d'œufs avec le parmesan.</li>
-                            <li>Mélanger les pâtes avec les lardons et la sauce.</li>
-                            <li>Servir immédiatement.</li>
-                        </ol>
-                    </div>
-                    <div class="recipe-time">
-                        <span>Temps :</span>
-                        <span>20 mins</span>
-                        <button class="save-btn">Enregistrer</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="recipe-card">
-                <div class="tag">Plat</div>
-                <div class="recipe-content">
-                    <div class="recipe-ingredients">
-                        <h3>Ingrédients :</h3>
-                        <ul>
-                            <li>Riz</li>
-                            <li>Champignons</li>
-                            <li>Oignons</li>
-                            <li>Vin blanc</li>
-                            <li>Parmesan</li>
-                        </ul>
-                    </div>
-                    <div class="recipe-preparation">
-                        <h3>Préparation :</h3>
-                        <ol>
-                            <li>Faire revenir l'oignon.</li>
-                            <li>Ajouter les champignons.</li>
-                            <li>Incorporer le riz et le vin blanc.</li>
-                            <li>Ajouter le bouillon progressivement.</li>
-                            <li>Finir avec le parmesan.</li>
-                        </ol>
-                    </div>
-                    <div class="recipe-time">
-                        <span>Temps :</span>
-                        <span>40 mins</span>
-                        <button class="save-btn">Enregistrer</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="recipe-card">
-                <div class="tag">Plat</div>
-                <div class="recipe-content">
-                    <div class="recipe-ingredients">
-                        <h3>Ingrédients :</h3>
-                        <ul>
-                            <li>Aubergine</li>
-                            <li>Courgette</li>
-                            <li>Poivron</li>
-                            <li>Tomate</li>
-                            <li>Oignon</li>
-                        </ul>
-                    </div>
-                    <div class="recipe-preparation">
-                        <h3>Préparation :</h3>
-                        <ol>
-                            <li>Couper les légumes en dés.</li>
-                            <li>Faire revenir les oignons et l'ail.</li>
-                            <li>Ajouter les légumes progressivement.</li>
-                            <li>Laisser mijoter 20-30 minutes.</li>
-                            <li>Assaisonner et servir.</li>
-                        </ol>
-                    </div>
-                    <div class="recipe-time">
-                        <span>Temps :</span>
-                        <span>1 heure</span>
-                        <button class="save-btn">Enregistrer</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="pagination">
-            <div class="pagination-controls">
-                <a href="#" class="pagination-prev">
-                    <i class="fas fa-arrow-left"></i> Previous
-                </a>
-                <div class="pagination-numbers">
-                    <a href="#" class="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <span>...</span>
-                    <a href="#">67</a>
-                    <a href="#">68</a>
-                </div>
-                <a href="#" class="pagination-next">
-                    Next <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <aside class="search-sidebar">
-        <div class="search-container">
-            <div class="search-input">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Rechercher">
             </div>
         </div>
+    </div>
 
-        <div class="frame">
-            <h3>Frame 1</h3>
-
-            <button class="category-btn accent">
-                <i class="fas fa-pencil-alt"></i> Tout les plats
-            </button>
-
-            <button class="category-btn">
-                <i class="fas fa-pencil-alt"></i> Plat Principal
-            </button>
-
-            <button class="category-btn">
-                <i class="fas fa-pencil-alt"></i> Entrée
-            </button>
-
-            <button class="category-btn">
-                <i class="fas fa-pencil-alt"></i> Dessert
-            </button>
-        </div>
-    </aside>
-
-    <script src="script.js"></script>
+    <!-- Footer -->
+    <footer class="text-center py-4 opacity-70 font-['Judson']">
+        <p>Réalisé par Esteban, Sébastien, Idryss et Lamine</p>
+    </footer>
 </body>
 </html>

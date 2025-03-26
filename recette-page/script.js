@@ -1,119 +1,98 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Données des recettes (normalement chargées depuis le JSON)
-    const recettesData = {
-        "recettes": [
-            {
-                "nom": "Poulet rôti aux herbes",
-                "categorie": "Plat principal",
-                "temps_preparation": "1 heure",
-                "ingredients": [
-                    { "nom": "Poulet", "quantite": "1" },
-                    { "nom": "Herbes fraîches", "quantite": "1" },
-                    { "nom": "Sel et poivre", "quantite": "10g" },
-                    { "nom": "Huile d'olive", "quantite": "10g" }
-                ],
-                "etapes": [
-                    "Préchauffez le four à 200°C.",
-                    "Nettoyez le poulet et assaisonnez-le généreusement avec du sel, du poivre et les herbes.",
-                    "Badigeonnez le poulet d'huile d'olive.",
-                    "Placez le poulet dans un plat allant au four et enfournez-le pendant environ 1 heure ou jusqu'à ce qu'il soit bien doré et cuit à cœur.",
-                    "Laissez reposer quelques minutes avant de découper et de servir."
-                ]
-            },
-            // Les autres recettes seraient ici (j'ai omis pour raccourcir)
-        ]
-    };
+document.addEventListener("DOMContentLoaded", function () {
+    let recettes = [];
+    let currentPage = 1;
+    const recettesParPage = 8;
 
-    const recipesGrid = document.querySelector('.recipes-grid');
-    const categoryButtons = document.querySelectorAll('.category-btn');
-    
-    // Fonction pour créer une carte de recette
-    function createRecipeCard(recipe) {
-        const card = document.createElement('div');
-        card.className = 'recipe-card';
-        
-        // Déterminer l'étiquette de catégorie
-        let tagLabel = 'Plat';
-        if (recipe.categorie === 'Entrée') tagLabel = 'Entrée';
-        else if (recipe.categorie === 'Dessert') tagLabel = 'Dessert';
-        
-        card.innerHTML = `
-            <div class="tag">${tagLabel}</div>
-            <div class="recipe-content">
-                <div class="recipe-ingredients">
-                    <h3>Ingrédients :</h3>
-                    <ul>
-                        ${recipe.ingredients.map(ing => {
-                            if (typeof ing === 'object') {
-                                return `<li>${ing.nom}${ing.quantite ? ` (${ing.quantite})` : ''}</li>`;
-                            } else {
-                                return `<li>${ing}</li>`;
-                            }
-                        }).join('')}
-                    </ul>
-                </div>
-                <div class="recipe-preparation">
-                    <h3>Préparation :</h3>
-                    <ol>
-                        ${recipe.etapes.map(step => `<li>${step}</li>`).join('')}
-                    </ol>
-                </div>
-                <div class="recipe-time">
-                    <span>Temps :</span>
-                    <span>${recipe.temps_preparation}</span>
-                    <button class="save-btn">Enregistrer</button>
-                </div>
-            </div>
-        `;
-        
-        return card;
-    }
-    
-    // Fonction pour charger les recettes (filtrer par catégorie si spécifié)
-    function loadRecipes(category = null) {
-        // Effacer les recettes existantes
-        recipesGrid.innerHTML = '';
-        
-        // Filtrer et afficher les recettes
-        const filteredRecipes = category ? 
-            recettesData.recettes.filter(r => r.categorie === category) : 
-            recettesData.recettes;
-        
-        // Limiter à 8 recettes par page
-        const recipesToShow = filteredRecipes.slice(0, 8);
-        
-        // Ajouter les cartes de recettes
-        recipesToShow.forEach(recipe => {
-            const card = createRecipeCard(recipe);
-            recipesGrid.appendChild(card);
-        });
-    }
-    
-    // Ajouter des écouteurs d'événements aux boutons de catégorie
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Supprimer la classe accent de tous les boutons
-            categoryButtons.forEach(btn => btn.classList.remove('accent'));
-            // Ajouter la classe accent au bouton cliqué
-            this.classList.add('accent');
-            
-            // Obtenir la catégorie du bouton
-            const categoryText = this.textContent.trim();
-            let category = null;
-            
-            if (categoryText.includes('Principal')) {
-                category = 'Plat principal';
-            } else if (categoryText.includes('Entrée')) {
-                category = 'Entrée';
-            } else if (categoryText.includes('Dessert')) {
-                category = 'Dessert';
+    // Charger les recettes depuis data/data.json
+    fetch("data/data.json")
+        .then(response => response.json())
+        .then(data => {
+            if (Array.isArray(data.recettes)) {
+                recettes = data.recettes;
+                afficherRecettes();
+            } else {
+                console.error("Erreur: 'recettes' n'est pas un tableau.");
             }
-            
-            // Charger les recettes filtrées
-            loadRecipes(category);
+        })
+        .catch(error => console.error("Erreur de chargement des recettes :", error));
+
+    function afficherRecettes() {
+        const container = document.getElementById("recettes-container");
+        container.innerHTML = ""; // Nettoyer les anciennes recettes
+
+        const debut = (currentPage - 1) * recettesParPage;
+        const fin = debut + recettesParPage;
+        const recettesAffichees = recettes.slice(debut, fin); // Sélection des recettes pour la page actuelle
+
+        if (recettesAffichees.length === 0) {
+            container.innerHTML = "<p class='text-center text-red-500'>Aucune recette à afficher.</p>";
+            return;
+        }
+
+        // Créer une grille de 4 colonnes, 2 rangées
+        container.className = "w-full lg:w-3/4 p-4 grid grid-cols-4 grid-rows-2 gap-4";
+
+        // Affichage des recettes avec une boucle forEach
+        recettesAffichees.forEach(recette => {
+            const card = document.createElement("div");
+            card.className = "bg-[#574848] rounded-lg p-4 text-white";
+
+            // Formatter les ingrédients
+            const ingredients = Array.isArray(recette.ingredients) 
+                ? recette.ingredients.map(ing => typeof ing === 'object' ? ing.nom : ing).slice(0, 3).join(", ") 
+                : recette.ingredients;
+
+            card.innerHTML = `
+                <h2 class="text-lg font-bold mb-2">${recette.nom}</h2>
+                <div class="mb-2"><strong>Catégorie:</strong> ${recette.categorie}</div>
+                <div class="mb-2 truncate"><strong>Ingrédients:</strong> ${ingredients}${ingredients.length > 30 ? '...' : ''}</div>
+                <div class="flex justify-between items-center mt-auto">
+                    <span>Temps: ${recette.temps_preparation}</span>
+                    <button class="bg-yellow-400 text-black px-3 py-1 rounded">Enregistrer</button>
+                </div>
+            `;
+
+            container.appendChild(card);
         });
+
+        // Mettre à jour le numéro de page
+        document.getElementById("pageNumber").innerText = currentPage;
+        
+        // Mettre à jour l'état des boutons de pagination
+        mettreAJourBoutons();
+    }
+
+    function mettreAJourBoutons() {
+        const prevButton = document.getElementById("prevPage");
+        const nextButton = document.getElementById("nextPage");
+
+        // Calculer le nombre total de pages
+        const totalPages = Math.ceil(recettes.length / recettesParPage);
+
+        // Désactiver le bouton Previous si on est sur la première page
+        prevButton.disabled = currentPage === 1;
+        prevButton.classList.toggle("opacity-50", currentPage === 1);
+        prevButton.classList.toggle("cursor-not-allowed", currentPage === 1);
+
+        // Désactiver le bouton Next si on est sur la dernière page
+        nextButton.disabled = currentPage === totalPages;
+        nextButton.classList.toggle("opacity-50", currentPage === totalPages);
+        nextButton.classList.toggle("cursor-not-allowed", currentPage === totalPages);
+    }
+
+    // Gestionnaires d'événements pour la pagination
+    document.getElementById("prevPage").addEventListener("click", function () {
+        if (currentPage > 1) {
+            currentPage--;
+            afficherRecettes();
+        }
     });
-    
-    // Charger toutes les recettes au démarrage
-    loadRecipes();
+
+    document.getElementById("nextPage").addEventListener("click", function () {
+        const totalPages = Math.ceil(recettes.length / recettesParPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            afficherRecettes();
+        }
+    });
 });
