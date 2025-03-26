@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         recetteDiv.innerHTML = `
         <div class="relative h-64 overflow-hidden">
             <img 
-                src="${getPlaceholderImage(recette.categorie)}" 
+                src="${recette.image}" 
                 alt="${recette.nom}" 
                 class="w-full h-full object-cover"
             >
