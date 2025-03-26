@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     let allRecipes = [];
 
-    fetch("../data/recettes.json") 
+ 
+    fetch("../data/recettes.json")
         .then(response => {
             if (!response.ok) {
                 throw new Error("Erreur HTTP : " + response.status);
@@ -12,11 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!data.recettes || !Array.isArray(data.recettes)) {
                 throw new Error("Le fichier JSON ne contient pas de tableau 'recettes'.");
             }
-            
-            allRecipes = data.recettes; 
+
+            allRecipes = data.recettes;
             displayRecipes(getRandomRecipes());
 
-            // Ajout des événements pour la recherche
+            //  recherche
             const searchBar = document.getElementById("search-bar");
             searchBar.addEventListener("input", updateSuggestions);
             searchBar.addEventListener("focus", updateSuggestions);
@@ -33,15 +34,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         recipes.forEach((recipe) => {
             const card = document.createElement("div");
-            card.className = "recipe-card p-6  rounded-lg  w-64 relative opacity-0 translate-y-4 transition-all duration-500 w-[500px]";
-            
+            card.className = "recipe-card p-6 rounded-lg w-64 relative opacity-0 translate-y-4 transition-all duration-500 w-[500px] cursor-pointer";
+            card.setAttribute("data-title", recipe.nom);
+            card.setAttribute("data-ingredients", formatIngredients(recipe.ingredients));
+            card.setAttribute("data-instructions", formatSteps(recipe.etapes));
+            card.setAttribute("data-time", recipe.temps_preparation);
+
             card.innerHTML = `
                 <div class="relative h-64 overflow-hidden">
                     <img src="${recipe.image}" alt="${recipe.nom}" class="w-full h-full object-cover">
                     <div class="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-3 py-1 rounded-md">${recipe.nom}</div>
                     <div class="absolute top-3 right-3 bg-white bg-opacity-80 px-3 py-1 rounded-md">${recipe.categorie}</div>
                 </div>
-                <div class="flex justify-between items-center  shadow-lg p-4 bg-gray-100">
+                <div class="flex justify-between items-center shadow-lg p-4 bg-gray-100">
                     <div class="flex flex-col">
                         <span class="text-xs text-gray-500">Temps :</span>
                         <span class="text-gray-700">${recipe.temps_preparation}</span>
@@ -60,13 +65,14 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => card.classList.remove("opacity-0", "translate-y-4"), 100);
         });
 
-        // Ajouter les événements sur les boutons "Voir plus"
-        document.querySelectorAll(".open-modal").forEach(button => {
-            button.addEventListener("click", (event) => {
-                const title = event.target.getAttribute("data-title");
-                const ingredients = event.target.getAttribute("data-ingredients");
-                const instructions = event.target.getAttribute("data-instructions");
-                const time = event.target.getAttribute("data-time");
+   
+        document.querySelectorAll(".recipe-card, .open-modal").forEach(element => {
+            element.addEventListener("click", (event) => {
+                const target = event.currentTarget;
+                const title = target.getAttribute("data-title");
+                const ingredients = target.getAttribute("data-ingredients");
+                const instructions = target.getAttribute("data-instructions");
+                const time = target.getAttribute("data-time");
                 openModal(title, ingredients, instructions, time);
             });
         });
@@ -101,6 +107,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function closeModal() {
         document.getElementById("modal").classList.add("hidden");
     }
+
+
+    document.getElementById("close-modal").addEventListener("click", closeModal);
 
     document.getElementById("modal").addEventListener("click", (event) => {
         if (event.target.id === "modal") {
@@ -139,4 +148,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         suggestionsContainer.classList.toggle("hidden", filteredRecipes.length === 0);
     }
+
+    //burger btn
+    const menuToggle = document.getElementById("menu-toggle");
+    const navMenu = document.querySelector("nav");
+
+    menuToggle.addEventListener("click", function () {
+        navMenu.classList.toggle("active");
+    });
 });
+
+
+

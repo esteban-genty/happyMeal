@@ -1,35 +1,51 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"> <!-- Document's encoder -->
-    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Mobile display -->
-    <meta name="description" content="Site de recette"> <!-- Description of the page -->
-    <meta name="keywords" content="HappyMeal, Gestion de recette"> <!-- Keywords (For Google etc...) -->
-    <meta name="author" content="Estéban, Sébastien, Lamine, Idryss"> <!-- Author -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Site de recette">
+    <meta name="keywords" content="HappyMeal, Gestion de recette">
+    <meta name="author" content="Estéban, Sébastien, Lamine, Idryss">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../js/accueil.js"></script>
- 
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-    <title>HappyMeal - Accueil</title> <!-- Website Title -->
+    <title>HappyMeal - Accueil</title>
 </head>
 <body class="bg-[#f8f1e4] text-gray-900 min-h-screen flex flex-col">
 
     <!-- Header -->
-    <header class="w-full bg-white py-1 px-6 flex items-center justify-between ">
-        <img src="../assets/logos/logo-transparent-svg.svg" alt="logo" class="h-20">
-        <nav class="flex justify-center flex-1 font-bold font-['Arial']">
-            <a href="#" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition" aria-label="Planning">Planning</a>
-            <a href="#" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition" aria-label="Favoris">Favoris</a>
-            <a href="#" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition" aria-label="Recettes">Recettes</a>
-            <a href="#" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition" aria-label="Courses">Courses</a>
-        </nav>
-        
-        <a href="#" class="bg-orange-400 text-white px-8 py-2  justify-center flex rounded-xl  text-center hover:bg-orange-300 transition shadow-2xs ">
-       <img src="../assets/logos/logo-meal.png"  class= "h-6 w-8 mr-2" alt="logo-meal"> Voir toutes les recettes
-
-
+    <header class="w-full bg-white py-3 px-6 flex items-center justify-between shadow-md">
+       
+        <a href="#">
+            <img src="../assets/logos/logo-transparent-svg.svg" alt="logo" class="h-12 md:h-16">
         </a>
+
+       
+        <nav class="hidden md:flex flex-1 justify-center gap-10 text-lg font-bold">
+            <a href="#" class="hover:text-[#B9625D] transition">Planning</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Favoris</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Recettes</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Courses</a>
+        </nav>
+
+    
+        <a href="#" class="hidden md:flex bg-orange-400 text-white px-4 py-2 rounded-xl hover:bg-orange-300 transition shadow-md items-center">
+            <img src="../assets/logos/logo-meal.png" class="h-6 w-6 mr-2" alt="logo-meal">
+            Voir toutes les recettes
+        </a>
+        <nav class="md:hidden flex flex-col items-center gap-3 mt-3 text-lg font-bold">
+            <a href="#" class="hover:text-[#B9625D] transition">Planning</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Favoris</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Recettes</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Courses</a>
+            <a href="#" class="bg-orange-400 text-white px-4 py-2 rounded-xl hover:bg-orange-300 transition shadow-md">
+                Voir recettes
+            </a>
+        </nav>
     </header>
+
+    
+  
+
+
     
     <!--  Section --> 
     <div class="relative w-full h-[350px] bg-black">
@@ -40,7 +56,8 @@
 <div class="relative w-96 mt-4">
     
     <div class="bg-white flex items-center px-8 py-3 rounded-full shadow-md w-full focus-within:ring-2 focus-within:ring-amber-400 transition-all">
-        <box-icon name='menu'></box-icon>
+        <box-icon name="menu" type="solid"></box-icon>
+
        
         <input id="search-bar" type="text" placeholder="Rechercher" class="w-full  outline-none text-gray-700">
         <svg class="w-5 h-5 text-gray-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -68,7 +85,7 @@
         <!-- Modal -->
         <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div class="bg-white p-6 rounded-lg w-[40rem] shadow-lg border border-black relative">
-                <button onclick="closeModal()" class="absolute top-2 right-2 text-xl font-bold">✕</button>
+        
                 
                 <div class="bg-amber-400 px-4 py-2 rounded-lg shadow-md text-lg font-bold text-black w-fit">
                     <h2 id="modal-title"></h2>
@@ -81,7 +98,10 @@
                 
                 <h3 class="mt-4 text-lg font-bold underline">Ingrédients</h3>
                 <div id="modal-ingredients" class="flex flex-wrap gap-2 mt-2"></div>
+                <button id="close-modal" class="absolute top-2 right-2 text-xl font-bold">✕</button>
+
             </div>
+            
         </div>
     
     
