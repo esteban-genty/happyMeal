@@ -36,35 +36,31 @@ document.addEventListener("DOMContentLoaded", () => {
             card.className = "recipe-card p-6  rounded-lg  w-64 relative opacity-0 translate-y-4 transition-all duration-500 w-[500px]";
             
             card.innerHTML = `
-          <div class="relative h-64 overflow-hidden">
-            <img 
-                src="${recipe.image}" 
-                alt="${recipe.nom}" 
-                class="w-full h-full object-cover"
-            >
-            <div class="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-3 py-1 rounded-md">
-                ${recipe.nom}
-            </div>
-            <div class="absolute top-3 right-3 bg-white bg-opacity-80 px-3 py-1 rounded-md">
-                ${recipe.categorie}
-            </div>
-        </div>
-        <div class="flex justify-between items-center shadow-lg p-4 bg-gray-100">
-            <div class="flex flex-col">
-                <span class="text-xs text-gray-500">Temps :</span>
-                <span class="text-gray-700 ">${recipe.temps_preparation}</span>
-            </div>
-            <button class="bg-orange-300 text-white px-4 py-2 rounded-md font-bold hover:bg-orange-400 transition-colors ">
-               Voir plus
-            </button>
-        </div>
-        `;
+                <div class="relative h-64 overflow-hidden">
+                    <img src="${recipe.image}" alt="${recipe.nom}" class="w-full h-full object-cover">
+                    <div class="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-3 py-1 rounded-md">${recipe.nom}</div>
+                    <div class="absolute top-3 right-3 bg-white bg-opacity-80 px-3 py-1 rounded-md">${recipe.categorie}</div>
+                </div>
+                <div class="flex justify-between items-center  shadow-lg p-4 bg-gray-100">
+                    <div class="flex flex-col">
+                        <span class="text-xs text-gray-500">Temps :</span>
+                        <span class="text-gray-700">${recipe.temps_preparation}</span>
+                    </div>
+                    <button class="bg-orange-300 text-white px-4 py-2 rounded-md font-bold hover:bg-orange-600 transition-colors open-modal"
+                        data-title="${recipe.nom}"
+                        data-ingredients="${formatIngredients(recipe.ingredients)}"
+                        data-instructions="${formatSteps(recipe.etapes)}"
+                        data-time="${recipe.temps_preparation}">
+                        Voir plus
+                    </button>
+                </div>
+            `;
 
             container.appendChild(card);
             setTimeout(() => card.classList.remove("opacity-0", "translate-y-4"), 100);
         });
 
-        
+        // Ajouter les événements sur les boutons "Voir plus"
         document.querySelectorAll(".open-modal").forEach(button => {
             button.addEventListener("click", (event) => {
                 const title = event.target.getAttribute("data-title");
