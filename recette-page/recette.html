@@ -5,19 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HappyMeal - Toutes les recettes</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../recette-page/script.js" defer></script>
 </head>
 <body class="bg-[#f8f1e4] min-h-screen font-sans">
     <!-- Header -->
     <header class="bg-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-            <img src="../assets/logos/logo-transparent-svg.svg" alt="HappyMeal Logo" class="h-12">
-            <nav class="hidden md:flex space-x-8">
-                <a href="#" class="text-black px-6 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition">Planning</a>
-                <a href="#" class="text-black px-6 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition">Favoris</a>
-                <a href="#" class="text-black px-6 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition">Recettes</a>
-                <a href="#" class="text-black px-6 py-2 rounded-lg hover:bg-orange-600 hover:text-white transition">Courses</a>
+            <!-- Logo à gauche -->
+            <div class="flex-shrink-0">
+                <img src="img/logo-transparent-png.png" alt="HappyMeal Logo" class="h-12">
+            </div>
+    
+            <!-- Liens au centre -->
+            <nav class="hidden md:flex space-x-8 mx-auto">
+                <a href="#" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition font-bold">Planning</a>
+                <a href="#" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition font-bold">Favoris</a>
+                <a href="#" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition font-bold">Recettes</a>
+                <a href="#" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition font-bold">Courses</a>
             </nav>
-            <a href="#" class="bg-orange-300 text-black px-4 py-2 hover:bg-orange-400 transition shadow-xl">
+    
+            <!-- Bouton à droite -->
+            <a href="recette.html" class="flex items-center bg-orange-300 text-white px-8 py-2 hover:bg-orange-400 transition shadow-lg font-bold rounded-md">
+                <img src="img/logo-meal.png" alt="Logo Meal" class="w-6 h-6 mr-2">
                 Voir toutes les recettes
             </a>
         </div>
@@ -35,35 +44,18 @@
     <div class="flex">
 
     <!-- Conteneur des cartes -->
-    <div class="w-full lg:w-3/4 p-4 grid grid-cols-4 gap-4">
-    <!-- Cartes de recettes -->
-    <div class="bg-[#574848] rounded-lg p-4 text-white">
-        <h2 class="text-lg font-bold mb-2">Poulet rôti aux herbes</h2>
-        <div class="mb-2"><strong>Ingrédients:</strong></div>
-        <div class="mb-2"><strong>Préparation:</strong></div>
-        <div class="flex justify-between items-center">
-            <span>Temps: 10 mins</span>
-            <button class="bg-yellow-400 text-black px-3 py-1 rounded">Enregistrer</button>
+    <div class="container mx-auto px-4 py-8 ">
+        <div id="recettes-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center" >
+                <div class="  bg-white shadow-md rounded-lg p-4">
+                    <!-- Contenu de la carte -->
+                </div>
+            <!-- Recipes will be dynamically inserted here -->
         </div>
     </div>
-    
-    <!-- Répéter d'autres cartes -->
-    <div class="bg-[#574848] rounded-lg p-4"></div>
-    <div class="bg-[#574848] rounded-lg p-4"></div>
-    <div class="bg-[#574848] rounded-lg p-4"></div>
-    <div class="bg-[#574848] rounded-lg p-4"></div>
-    <div class="bg-[#574848] rounded-lg p-4"></div>
-    <div class="bg-[#574848] rounded-lg p-4"></div>
-    <div class="bg-[#574848] rounded-lg p-4"></div>
 
     <!-- Pagination centrée sous les cartes -->
-    <div class="col-span-4 flex justify-center mt-4 pb-4">
-        <button class="px-4 py-2">← Previous</button>
-        <span class="px-4 py-2 bg-black text-white">1</span>
-        <span class="px-4 py-2">2</span>
-        <button class="px-4 py-2">Next →</button>
-    </div>
-</div>
+    
+
 
 
 

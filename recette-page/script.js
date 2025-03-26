@@ -1,98 +1,134 @@
-document.addEventListener("DOMContentLoaded", function () {
-    let recettes = [];
+document.addEventListener('DOMContentLoaded', () => {
+    const recipesPerPage = 8;
     let currentPage = 1;
-    const recettesParPage = 8;
+    let totalRecipes = [];
 
-    // Charger les recettes depuis data/data.json
-    fetch("data/data.json")
-        .then(response => response.json())
-        .then(data => {
-            if (Array.isArray(data.recettes)) {
-                recettes = data.recettes;
-                afficherRecettes();
-            } else {
-                console.error("Erreur: 'recettes' n'est pas un tableau.");
-            }
-        })
-        .catch(error => console.error("Erreur de chargement des recettes :", error));
+    const container = document.getElementById('recettes-container');
+    const paginationContainer = document.getElementById('pagination-container');
+    const prevButton = document.getElementById('prev-button');
+    const nextButton = document.getElementById('next-button');
+    const pageNumbersContainer = document.getElementById('page-numbers');
 
-    function afficherRecettes() {
-        const container = document.getElementById("recettes-container");
-        container.innerHTML = ""; // Nettoyer les anciennes recettes
+    // Function to get a placeholder image based on category
+    const getPlaceholderImage = (categorie) => {
+        const placeholders = {
+            'Plat principal': 'https://via.placeholder.com/400x300?text=Plat+Principal',
+            'Entrée': 'https://via.placeholder.com/400x300?text=Entrée',
+            'Dessert': 'https://via.placeholder.com/400x300?text=Dessert',
+            'default': 'https://via.placeholder.com/400x300?text=Recette'
+        };
+        return placeholders[categorie] || placeholders['default'];
+    };
 
-        const debut = (currentPage - 1) * recettesParPage;
-        const fin = debut + recettesParPage;
-        const recettesAffichees = recettes.slice(debut, fin); // Sélection des recettes pour la page actuelle
+    // Create recipe card
+    const createRecipeCard = (recette) => {
+        const recetteDiv = document.createElement('div');
+        recetteDiv.classList.add('relative', 'w-[285px]', 'bg-white', 'rounded-lg', 'overflow-hidden', 'shadow-lg', 'transform', 'transition-transform', 'hover:scale-105');
+        recetteDiv.innerHTML = `
+        <div class="relative h-64 overflow-hidden">
+            <img 
+                src="${getPlaceholderImage(recette.categorie)}" 
+                alt="${recette.nom}" 
+                class="w-full h-full object-cover"
+            >
+            <div class="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-3 py-1 rounded-md">
+                ${recette.nom}
+            </div>
+            <div class="absolute top-3 right-3 bg-white bg-opacity-80 px-3 py-1 rounded-md">
+                ${recette.categorie}
+            </div>
+        </div>
+        <div class="flex justify-between items-center p-4 bg-gray-100">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-500">Temps :</span>
+                <span class="text-gray-700">${recette.temps_preparation}</span>
+            </div>
+            <button class="bg-orange-300 text-white px-4 py-2 rounded-md font-bold hover:bg-orange-600 transition-colors">
+                Enregistrer
+            </button>
+        </div>
+        `;
+        return recetteDiv;
+    };
 
-        if (recettesAffichees.length === 0) {
-            container.innerHTML = "<p class='text-center text-red-500'>Aucune recette à afficher.</p>";
-            return;
-        }
+    // Render recipes for current page
+    const renderRecipes = () => {
+        // Clear previous recipes
+        container.innerHTML = '';
 
-        // Créer une grille de 4 colonnes, 2 rangées
-        container.className = "w-full lg:w-3/4 p-4 grid grid-cols-4 grid-rows-2 gap-4";
+        // Calculate start and end indices for current page
+        const startIndex = (currentPage - 1) * recipesPerPage;
+        const endIndex = startIndex + recipesPerPage;
+        const pageRecipes = totalRecipes.slice(startIndex, endIndex);
 
-        // Affichage des recettes avec une boucle forEach
-        recettesAffichees.forEach(recette => {
-            const card = document.createElement("div");
-            card.className = "bg-[#574848] rounded-lg p-4 text-white";
-
-            // Formatter les ingrédients
-            const ingredients = Array.isArray(recette.ingredients) 
-                ? recette.ingredients.map(ing => typeof ing === 'object' ? ing.nom : ing).slice(0, 3).join(", ") 
-                : recette.ingredients;
-
-            card.innerHTML = `
-                <h2 class="text-lg font-bold mb-2">${recette.nom}</h2>
-                <div class="mb-2"><strong>Catégorie:</strong> ${recette.categorie}</div>
-                <div class="mb-2 truncate"><strong>Ingrédients:</strong> ${ingredients}${ingredients.length > 30 ? '...' : ''}</div>
-                <div class="flex justify-between items-center mt-auto">
-                    <span>Temps: ${recette.temps_preparation}</span>
-                    <button class="bg-yellow-400 text-black px-3 py-1 rounded">Enregistrer</button>
-                </div>
-            `;
-
-            container.appendChild(card);
+        // Render recipes for current page
+        pageRecipes.forEach(recette => {
+            container.appendChild(createRecipeCard(recette));
         });
 
-        // Mettre à jour le numéro de page
-        document.getElementById("pageNumber").innerText = currentPage;
-        
-        // Mettre à jour l'état des boutons de pagination
-        mettreAJourBoutons();
-    }
+        // Update pagination buttons and page numbers
+        updatePagination();
+    };
 
-    function mettreAJourBoutons() {
-        const prevButton = document.getElementById("prevPage");
-        const nextButton = document.getElementById("nextPage");
+    // Update pagination controls
+    const updatePagination = () => {
+        const totalPages = Math.ceil(totalRecipes.length / recipesPerPage);
 
-        // Calculer le nombre total de pages
-        const totalPages = Math.ceil(recettes.length / recettesParPage);
+        // Update page numbers
+        pageNumbersContainer.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+            const pageSpan = document.createElement('span');
+            pageSpan.textContent = i;
+            pageSpan.classList.add('px-4', 'py-2', 'cursor-pointer', 'hover:bg-gray-200');
+            
+            if (i === currentPage) {
+                pageSpan.classList.add('bg-black', 'text-white');
+            }
 
-        // Désactiver le bouton Previous si on est sur la première page
+            pageSpan.addEventListener('click', () => {
+                currentPage = i;
+                renderRecipes();
+            });
+
+            pageNumbersContainer.appendChild(pageSpan);
+        }
+
+        // Update prev/next button states
         prevButton.disabled = currentPage === 1;
-        prevButton.classList.toggle("opacity-50", currentPage === 1);
-        prevButton.classList.toggle("cursor-not-allowed", currentPage === 1);
+        prevButton.classList.toggle('text-gray-300', currentPage === 1);
+        prevButton.classList.toggle('cursor-not-allowed', currentPage === 1);
 
-        // Désactiver le bouton Next si on est sur la dernière page
         nextButton.disabled = currentPage === totalPages;
-        nextButton.classList.toggle("opacity-50", currentPage === totalPages);
-        nextButton.classList.toggle("cursor-not-allowed", currentPage === totalPages);
-    }
+        nextButton.classList.toggle('text-gray-300', currentPage === totalPages);
+        nextButton.classList.toggle('cursor-not-allowed', currentPage === totalPages);
+    };
 
-    // Gestionnaires d'événements pour la pagination
-    document.getElementById("prevPage").addEventListener("click", function () {
-        if (currentPage > 1) {
-            currentPage--;
-            afficherRecettes();
-        }
-    });
+    // Fetch and prepare recipes
+    fetch('../data/data.json')
+    .then(response => response.json())
+    .then(data => {
+        // Remove duplicates by creating a Set of recipe names
+        totalRecipes = Array.from(new Set(data.recettes.map(r => r.nom)))
+            .map(nom => data.recettes.find(r => r.nom === nom));
 
-    document.getElementById("nextPage").addEventListener("click", function () {
-        const totalPages = Math.ceil(recettes.length / recettesParPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            afficherRecettes();
-        }
-    });
+        // Initial render
+        renderRecipes();
+
+        // Set up prev/next button events
+        prevButton.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderRecipes();
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            const totalPages = Math.ceil(totalRecipes.length / recipesPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderRecipes();
+            }
+        });
+    })
+    .catch(error => console.error('Erreur de chargement:', error));
 });
