@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste de Courses</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</head>
+<body class="bg-[#f8f1e4] text-gray-900 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="w-full bg-white py-3 px-6 flex items-center justify-between shadow-md">
+        <a href="#">
+            <img src="../assets/logos/logo-transparent-svg.svg" alt="logo" class="h-12 md:h-16">
+        </a>
+        <nav class="hidden md:flex flex-1 justify-center gap-10 text-lg font-bold">
+            <a href="#" class="hover:text-[#B9625D] transition">Planning</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Favoris</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Recettes</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Courses</a>
+        </nav>
+        <a href="#" class="hidden md:flex bg-orange-400 text-white px-4 py-2 rounded-xl hover:bg-orange-300 transition shadow-md items-center">
+            <img src="../assets/logos/logo-meal.png" class="h-6 w-6 mr-2" alt="logo-meal">
+            Voir toutes les recettes
+        </a>
+    </header>
+    <div class="relative w-full h-[300px] bg-black">
+        <img src="../assets/logos/accueil.jpg" class="w-full h-full object-cover opacity-60" alt="Recettes">
+        </div>
+    <!-- Liste de Courses -->
+    <main class="flex-grow flex items-center justify-center p-6">
+        <div class="bg-[#fff8e1] p-6 rounded-lg shadow-xl w-full max-w-4xl border border-gray-300">
+            <h2 class="text-3xl font-bold mb-6 text-center text-[#B9625D] font-[Judson]"> Ma Liste de Courses</h2>
+            <div id="courses-list" class="grid grid-cols-2 md:grid-cols-4 gap-4 text-lg font-medium">
+           
+            </div>
+            <button id="clear-list" class="mt-6 w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-700 transition text-lg font-semibold">Vider la liste</button>
+            <button id="download-pdf" class="mt-4 w-full bg-orange-400 text-white py-3 rounded-lg hover:bg-orange-600 transition text-lg font-semibold">Télécharger ma liste</button>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-white text-black text-center p-4 opacity-70 font-['Judson']">
+        <p>Réalisé par Esteban, Sébastien, Idryss et Lamine</p>
+    </footer>
+    
+   <script src="../js/course.js"></script>
+</body>
+</html>
