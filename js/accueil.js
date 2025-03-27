@@ -93,10 +93,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const ingredientsContainer = document.getElementById("modal-ingredients");
         ingredientsContainer.innerHTML = "";
+        
 
         ingredients.split(", ").forEach(ing => {
             const btn = document.createElement("button");
-            btn.className = "bg-[#A35D52] text-white px-4 py-2 rounded-lg m-1";
+            btn.className = "bg-[#A35D52] text-white px-4 py-2 rounded-lg m-1 ";
             btn.innerText = ing;
             ingredientsContainer.appendChild(btn);
         });
@@ -149,13 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
         suggestionsContainer.classList.toggle("hidden", filteredRecipes.length === 0);
     }
 
-    //burger btn
-    const menuToggle = document.getElementById("menu-toggle");
-    const navMenu = document.querySelector("nav");
 
-    menuToggle.addEventListener("click", function () {
-        navMenu.classList.toggle("active");
-    });
 });
 
 
