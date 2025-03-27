@@ -61,7 +61,7 @@ function afficherRecette() {
         ajouterFavoris();
     }
 
-    function showPopup() {
+    function afficherPopup() {
         const popup = document.getElementById("popup");
     
         popup.classList.remove("hidden"); 
@@ -88,7 +88,7 @@ function afficherRecette() {
                 if (!recettesFavoris.some(r => r.nom === recetteToFavoris.nom)) {
                     recettesFavoris.push(recetteToFavoris);
                     localStorage.setItem('recettes', JSON.stringify(recettesFavoris));
-                    showPopup();
+                    afficherPopup();
                 }
             });
         });
