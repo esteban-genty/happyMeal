@@ -61,6 +61,23 @@ function afficherRecette() {
         ajouterFavoris();
     }
 
+    function showPopup() {
+        const popup = document.getElementById("popup");
+    
+        popup.classList.remove("hidden"); 
+        popup.classList.add("opacity-100");
+    
+        setTimeout(() => {
+            popup.classList.add("opacity-0");
+            popup.classList.remove("opacity-100");
+    
+            setTimeout(() => {
+                popup.classList.add("hidden");
+            }, 500);
+        }, 1500);
+    }
+    
+
     function ajouterFavoris() {
         document.querySelectorAll('.favoris-btn').forEach(button => {
             button.addEventListener('click', function() {
@@ -71,7 +88,7 @@ function afficherRecette() {
                 if (!recettesFavoris.some(r => r.nom === recetteToFavoris.nom)) {
                     recettesFavoris.push(recetteToFavoris);
                     localStorage.setItem('recettes', JSON.stringify(recettesFavoris));
-                    alert('Recette ajoutée aux favoris.');
+                    showPopup();
                 }
             });
         });
