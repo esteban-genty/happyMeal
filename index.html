@@ -1,14 +1,123 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"> <!-- Document's encoder -->
-    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Mobile display -->
-    <meta name="description" content="Site de recette"> <!-- Description of the page -->
-    <meta name="keywords" content="HappyMeal, Gestion de recette"> <!-- Keywords (For Google etc...) -->
-    <meta name="author" content="Estéban, Sébastien, Lamine, Idryss"> <!-- Author -->
-    <title>HappyMeal - Accueil</title> <!-- Website Title -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Site de recette">
+    <meta name="keywords" content="HappyMeal, Gestion de recette">
+    <meta name="author" content="Estéban, Sébastien, Lamine, Idryss">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <title>HappyMeal - Accueil</title>
 </head>
-<body>
+<body class="bg-[#f8f1e4] text-gray-900 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="w-full bg-white py-3 px-6 flex items-center justify-between shadow-md">
+       
+        <a href="#">
+            <img src="../assets/logos/logo-transparent-svg.svg" alt="logo" class="h-12 md:h-16">
+        </a>
+
+       
+        <nav class="hidden md:flex flex-1 justify-center gap-10 text-lg font-bold">
+            <a href="#" class="hover:text-[#B9625D] transition">Planning</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Favoris</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Recettes</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Courses</a>
+        </nav>
+
+    
+        <a href="#" class="hidden md:flex bg-orange-400 text-white px-4 py-2 rounded-xl hover:bg-orange-300 transition shadow-md items-center">
+            <img src="../assets/logos/logo-meal.png" class="h-6 w-6 mr-2" alt="logo-meal">
+            Voir toutes les recettes
+        </a>
+        <nav class="md:hidden flex flex-col items-center gap-3 mt-3 text-lg font-bold">
+            <a href="#" class="hover:text-[#B9625D] transition">Planning</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Favoris</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Recettes</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Courses</a>
+            <a href="#" class="bg-orange-400 text-white px-4 py-2 rounded-xl hover:bg-orange-300 transition shadow-md">
+                Voir recettes
+            </a>
+        </nav>
+    </header>
+
+    
+  
+
+
+    
+    <!--  Section --> 
+    <div class="relative w-full h-[350px] bg-black">
+        <img src="../assets/logos/accueil.jpg" class="w-full h-full object-cover opacity-60" alt="Recettes">
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center">
+            <h1 class="text-4xl font-bold">Toutes les recettes</h1>
+            <!-- Barre de recherche -->
+<div class="relative w-96 mt-4">
+    
+    <div class="bg-white flex items-center px-8 py-3 rounded-full shadow-md w-full focus-within:ring-2 focus-within:ring-amber-400 transition-all">
+        <box-icon name="menu" type="solid"></box-icon>
+
+       
+        <input id="search-bar" type="text" placeholder="Rechercher" class="w-full  outline-none text-gray-700">
+        <svg class="w-5 h-5 text-gray-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+    </div>
+
+    <!-- Suggestions -->
+    <ul id="suggestions" class="absolute left-0 w-full bg-white text-black hover:text-black shadow-lg rounded-md mt-1 hidden z-10">
+       
+    </ul>
+    
+    <!-- Suggestions -->
+</div>
+ <!-- Barre de recherche -->
+
+
+
+        </div>
+    </div>
+    <!-- Section Recettes -->
+    <section id="recipes-container" class="py-10 flex justify-center gap-8 flex-wrap"></section>
+
+        <!-- Modal -->
+        <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center ">
+            <div class="bg-[#FFF9F0] p-6 rounded-lg w-[40rem] shadow-lg border border-black relative">
+        
+                
+                <div class="bg-amber-400 px-4 py-2 rounded-lg shadow-md text-lg font-bold text-black w-fit">
+                    <h2 id="modal-title"></h2>
+                </div>
+                
+                <p class="mt-2 text-gray-800"><strong>Temps :</strong> <span id="modal-time"></span></p>
+                
+                <h3 class="mt-4 text-lg font-bold">Préparation</h3>
+                <p id="modal-prep" class="mt-2 text-gray-700"></p>
+                
+                <h3 class="mt-4 text-lg font-bold underline">Ingrédients</h3>
+                <div id="modal-ingredients" class="flex flex-wrap gap-2 mt-2"></div>
+                <button id="close-modal" class="absolute top-2 right-2 text-xl font-bold">✕</button>
+
+            </div>
+            
+        </div>
+    
+    
+    <!-- Footer -->
+ 
+
+    <footer class="bg-white-900 text-black text-center p-4 opacity-70 font-bold  font-['Judson']">
+        <p>Réalisé par Esteban, Sébastien, Idryss et Lamine</p>
+    </footer>
+    
+
+    <script src="../js/accueil.js" defer></script>
+    <script src="../js/recettes-aléatoires.js" defer></script>
+</body>
+</html>
 
 
 
