@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     let allRecipes = [];
 
- 
     fetch("../data/recettes.json")
         .then(response => {
             if (!response.ok) {
@@ -30,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function displayRecipes(recipes) {
         const container = document.getElementById("recipes-container");
-        container.innerHTML = ""; 
+        container.innerHTML = "";
 
         recipes.forEach((recipe) => {
             const card = document.createElement("div");
@@ -65,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => card.classList.remove("opacity-0", "translate-y-4"), 100);
         });
 
-   
         document.querySelectorAll(".recipe-card, .open-modal").forEach(element => {
             element.addEventListener("click", (event) => {
                 const target = event.currentTarget;
@@ -93,12 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const ingredientsContainer = document.getElementById("modal-ingredients");
         ingredientsContainer.innerHTML = "";
-        
 
         ingredients.split(", ").forEach(ing => {
             const btn = document.createElement("button");
             btn.className = "bg-[#A35D52] text-white px-4 py-2 rounded-lg m-1 ";
             btn.innerText = ing;
+            btn.addEventListener("click", () => ajouterAListeDeCourses(ing)); 
             ingredientsContainer.appendChild(btn);
         });
 
@@ -108,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function closeModal() {
         document.getElementById("modal").classList.add("hidden");
     }
-
 
     document.getElementById("close-modal").addEventListener("click", closeModal);
 
@@ -150,8 +147,12 @@ document.addEventListener("DOMContentLoaded", () => {
         suggestionsContainer.classList.toggle("hidden", filteredRecipes.length === 0);
     }
 
-
+    function ajouterAListeDeCourses(ingredient) {
+        let listeCourses = JSON.parse(localStorage.getItem("listeCourses")) || [];
+        if (!listeCourses.includes(ingredient)) {
+            listeCourses.push(ingredient);
+            localStorage.setItem("listeCourses", JSON.stringify(listeCourses));
+            alert(`${ingredient} ajouté à la liste de courses !`);
+        }
+    }
 });
-
-
-
