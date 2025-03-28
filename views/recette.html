@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HappyMeal - Toutes les recettes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../js/script.js" defer></script>
+    <script src="../js/favoris.js"></script>
+    
+</head>
+<body class="bg-[#f8f1e4] min-h-screen font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+            <div class="flex-shrink-0">
+                <img src="img/logo-transparent-png.png" alt="HappyMeal Logo" class="h-12">
+            </div>
+            
+            <nav class="hidden md:flex space-x-8 mx-auto">
+                <a href="#" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition font-bold">Planning</a>
+                <a href="favoris.html" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition font-bold">Favoris</a>
+                <a href="#" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition font-bold">Recettes</a>
+                <a href="#" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition font-bold">Courses</a>
+            </nav>
+            
+            <a href="recette.html" class="flex items-center bg-orange-300 text-white px-8 py-2 hover:bg-orange-400 transition shadow-xl font-bold rounded-md">
+                <img src="img/logo-meal.png" alt="Logo Meal" class="w-6 h-6 mr-2">
+                Voir toutes les recettes
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="relative h-[300px] bg-black">
+        <img src="img/chp.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60" alt="Recettes">
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center">
+            <h1 class="text-4xl font-bold">Toutes les recettes</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex">
+        <!-- Conteneur principal -->
+        <div class="w-full lg:w-4/5 flex flex-col order-1 lg:order-2">
+            <div class="container mx-auto px-4 py-8">
+                <div id="recettes-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center">
+                    <!-- Recipes will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center items-center space-x-4 mt-4 pb-4">
+                <button id="prev-button" class="px-4 py-2 rounded-md">← Précédent</button>
+                <span id="page-numbers" class="px-4 py-2 text-black"></span>
+                <button id="next-button" class="px-4 py-2 rounded-md">Suivant →</button>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="w-full lg:w-1/5 p-1 bg-[#574848] lg:sticky lg:top-0 lg:h-screen order-2 lg:order-3">
+            <div class="bg-[#574848] rounded-lg h-full overflow-y-auto">
+                <div class="p-3">
+                    <!-- Barre de recherche avec suggestions -->
+                    <div class="bg-white rounded-lg border mb-10 relative">
+                        <div class="flex items-center px-3 py-4 text-black-500">
+                            <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <input id="searchInput" type="text" placeholder="Rechercher" 
+                                   class="w-full outline-none placeholder-gray-400"
+                                   autocomplete="off">
+                        </div>
+                        <div id="searchSuggestions" class="hidden">
+                            <!-- Suggestions will be inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Category Buttons -->
+                    <div class="space-y-2">
+                        <div id="btn-all" class="category-btn bg-[#B9625D] text-white rounded-lg py-3 px-4 flex items-center cursor-pointer transition">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Tous les plats
+                        </div>
+                        <div id="btn-main" class="category-btn bg-white rounded-lg py-2 px-4 flex items-center text-gray-700 cursor-pointer transition">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Plat Principal
+                        </div>
+                        <div id="btn-starter" class="category-btn bg-white rounded-lg py-2 px-4 flex items-center text-gray-700 cursor-pointer transition">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Entrée
+                        </div>
+                        <div id="btn-dessert" class="category-btn bg-white rounded-lg py-2 px-4 flex items-center text-gray-700 cursor-pointer transition">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Dessert
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 opacity-70 font-['Judson']">
+        <p>Réalisé par Esteban, Sébastien, Idryss et Lamine</p>
+    </footer>
+</body>
+</html>

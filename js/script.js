@@ -21,6 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Normalize string for better search
+    const normalizeString = (str) => {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    };
+
     // Create recipe card
     const createRecipeCard = (recipe) => {
         const card = document.createElement('div');
@@ -57,24 +62,24 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const term = searchTerm.toLowerCase();
+        const term = normalizeString(searchTerm);
         
         // Recipe name matches
         const recipeMatches = allRecipes.filter(recipe => 
-            recipe.nom.toLowerCase().includes(term)
+            normalizeString(recipe.nom).includes(term)
         ).slice(0, 3);
 
         // Ingredient matches
         const ingredientMatches = [];
         allRecipes.forEach(recipe => {
             recipe.ingredients.forEach(ing => {
-                if (ing.nom.toLowerCase().includes(term)) {
+                if (normalizeString(ing.nom).includes(term)) {
                     if (!ingredientMatches.some(i => i.nom === ing.nom)) {
                         ingredientMatches.push(ing);
                     }
                 }
             });
-        }).slice(0, 3);
+        });
 
         // Show suggestions
         if (recipeMatches.length === 0 && ingredientMatches.length === 0) {
@@ -102,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             elements.suggestionsContainer.appendChild(suggestion);
         });
 
-        ingredientMatches.forEach(ing => {
+        ingredientMatches.slice(0, 3).forEach(ing => {
             const suggestion = document.createElement('div');
             suggestion.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center';
             suggestion.innerHTML = `
@@ -123,16 +128,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Filter recipes
     const filterRecipes = () => {
-        const searchTerm = elements.searchInput.value.toLowerCase();
+        const searchTerm = normalizeString(elements.searchInput.value);
         
         filteredRecipes = allRecipes.filter(recipe => {
             // Category filter
             const categoryMatch = currentCategory === 'all' || recipe.categorie === currentCategory;
             
+            // If no search term, return category matches
+            if (!searchTerm) return categoryMatch;
+            
             // Search filter
-            const nameMatch = recipe.nom.toLowerCase().includes(searchTerm);
+            const nameMatch = normalizeString(recipe.nom).includes(searchTerm);
             const ingredientMatch = recipe.ingredients.some(ing => 
-                ing.nom.toLowerCase().includes(searchTerm)
+                normalizeString(ing.nom).includes(searchTerm)
             );
             
             return categoryMatch && (nameMatch || ingredientMatch);
@@ -227,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Hide suggestions when clicking outside
         document.addEventListener('click', (e) => {
-            if (!elements.searchInput.contains(e.target)) {
+            if (!elements.searchInput.contains(e.target) && !elements.suggestionsContainer.contains(e.target)) {
                 elements.suggestionsContainer.classList.add('hidden');
             }
         });
