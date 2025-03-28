@@ -1,134 +1,293 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const recipesPerPage = 8;
+    const RECIPES_PER_PAGE = 8;
     let currentPage = 1;
-    let totalRecipes = [];
+    let allRecipes = [];
+    let filteredRecipes = [];
+    let currentCategory = 'all';
 
-    const container = document.getElementById('recettes-container');
-    const paginationContainer = document.getElementById('pagination-container');
-    const prevButton = document.getElementById('prev-button');
-    const nextButton = document.getElementById('next-button');
-    const pageNumbersContainer = document.getElementById('page-numbers');
-
-    // Function to get a placeholder image based on category
-    const getPlaceholderImage = (categorie) => {
-        const placeholders = {
-            'Plat principal': 'https://via.placeholder.com/400x300?text=Plat+Principal',
-            'Entrée': 'https://via.placeholder.com/400x300?text=Entrée',
-            'Dessert': 'https://via.placeholder.com/400x300?text=Dessert',
-            'default': 'https://via.placeholder.com/400x300?text=Recette'
-        };
-        return placeholders[categorie] || placeholders['default'];
+    // DOM Elements
+    const elements = {
+        container: document.getElementById('recettes-container'),
+        prevBtn: document.getElementById('prev-button'),
+        nextBtn: document.getElementById('next-button'),
+        pagination: document.getElementById('page-numbers'),
+        searchInput: document.getElementById('searchInput'),
+        suggestionsContainer: document.getElementById('searchSuggestions'),
+        categoryBtns: {
+            all: document.getElementById('btn-all'),
+            main: document.getElementById('btn-main'),
+            starter: document.getElementById('btn-starter'),
+            dessert: document.getElementById('btn-dessert')
+        }
     };
 
     // Create recipe card
-    const createRecipeCard = (recette) => {
-        const recetteDiv = document.createElement('div');
-        recetteDiv.classList.add('relative', 'w-[285px]', 'bg-white', 'rounded-lg', 'overflow-hidden', 'shadow-lg', 'transform', 'transition-transform', 'hover:scale-105');
-        recetteDiv.innerHTML = `
-        <div class="relative h-64 overflow-hidden">
-            <img 
-                src="${recette.image}" 
-                alt="${recette.nom}" 
-                class="w-full h-full object-cover"
-            >
-            <div class="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-3 py-1 rounded-md">
-                ${recette.nom}
+    const createRecipeCard = (recipe) => {
+        const card = document.createElement('div');
+        card.className = 'relative w-[285px] bg-white rounded-lg overflow-hidden shadow-lg transform transition-transform hover:scale-105';
+        card.innerHTML = `
+            <div class="relative h-64 overflow-hidden">
+                <img src="${recipe.image}" alt="${recipe.nom}" class="w-full h-full object-cover">
+                <div class="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-3 py-1 rounded-md">
+                    ${recipe.nom}
+                </div>
+                <div class="absolute top-3 right-3 bg-white bg-opacity-80 px-3 py-1 rounded-md">
+                    ${recipe.categorie}
+                </div>
             </div>
-            <div class="absolute top-3 right-3 bg-white bg-opacity-80 px-3 py-1 rounded-md">
-                ${recette.categorie}
+            <div class="flex justify-between items-center p-4 bg-gray-100">
+                <div class="flex flex-col">
+                    <span class="text-xs text-gray-500">Temps :</span>
+                    <span class="text-gray-700">${recipe.temps_preparation}</span>
+                </div>
+                <button class="bg-orange-300 text-white px-4 py-2 rounded-md font-bold hover:bg-orange-400 transition-colors">
+                    ♡ Favori
+                </button>
             </div>
-        </div>
-        <div class="flex justify-between items-center p-4 bg-gray-100">
-            <div class="flex flex-col">
-                <span class="text-xs text-gray-500">Temps :</span>
-                <span class="text-gray-700">${recette.temps_preparation}</span>
-            </div>
-            <button class="bg-orange-300 text-white px-4 py-2 rounded-md font-bold hover:bg-orange-400 transition-colors">
-                Enregistrer
-            </button>
-        </div>
         `;
-        return recetteDiv;
+        return card;
     };
 
-    // Render recipes for current page
-    const renderRecipes = () => {
-        // Clear previous recipes
-        container.innerHTML = '';
+    // Show search suggestions
+    const showSearchSuggestions = (searchTerm) => {
+        elements.suggestionsContainer.innerHTML = '';
+        
+        if (searchTerm.length < 2) {
+            elements.suggestionsContainer.classList.add('hidden');
+            return;
+        }
 
-        // Calculate start and end indices for current page
-        const startIndex = (currentPage - 1) * recipesPerPage;
-        const endIndex = startIndex + recipesPerPage;
-        const pageRecipes = totalRecipes.slice(startIndex, endIndex);
+        const term = searchTerm.toLowerCase();
+        
+        // Recipe name matches
+        const recipeMatches = allRecipes.filter(recipe => 
+            recipe.nom.toLowerCase().includes(term)
+        ).slice(0, 3);
 
-        // Render recipes for current page
-        pageRecipes.forEach(recette => {
-            container.appendChild(createRecipeCard(recette));
+        // Ingredient matches
+        const ingredientMatches = [];
+        allRecipes.forEach(recipe => {
+            recipe.ingredients.forEach(ing => {
+                if (ing.nom.toLowerCase().includes(term)) {
+                    if (!ingredientMatches.some(i => i.nom === ing.nom)) {
+                        ingredientMatches.push(ing);
+                    }
+                }
+            });
+        }).slice(0, 3);
+
+        // Show suggestions
+        if (recipeMatches.length === 0 && ingredientMatches.length === 0) {
+            elements.suggestionsContainer.classList.add('hidden');
+            return;
+        }
+
+        elements.suggestionsContainer.classList.remove('hidden');
+        
+        recipeMatches.forEach(recipe => {
+            const suggestion = document.createElement('div');
+            suggestion.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center';
+            suggestion.innerHTML = `
+                <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                <span class="font-semibold">${recipe.nom}</span>
+                <span class="text-xs text-gray-500 ml-2">${recipe.categorie}</span>
+            `;
+            suggestion.addEventListener('click', () => {
+                elements.searchInput.value = recipe.nom;
+                filterRecipes();
+                elements.suggestionsContainer.classList.add('hidden');
+            });
+            elements.suggestionsContainer.appendChild(suggestion);
         });
 
-        // Update pagination buttons and page numbers
+        ingredientMatches.forEach(ing => {
+            const suggestion = document.createElement('div');
+            suggestion.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center';
+            suggestion.innerHTML = `
+                <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                <span class="font-semibold">${ing.nom}</span>
+                <span class="text-xs text-gray-500 ml-2">Ingrédient</span>
+            `;
+            suggestion.addEventListener('click', () => {
+                elements.searchInput.value = ing.nom;
+                filterRecipes();
+                elements.suggestionsContainer.classList.add('hidden');
+            });
+            elements.suggestionsContainer.appendChild(suggestion);
+        });
+    };
+
+    // Filter recipes
+    const filterRecipes = () => {
+        const searchTerm = elements.searchInput.value.toLowerCase();
+        
+        filteredRecipes = allRecipes.filter(recipe => {
+            // Category filter
+            const categoryMatch = currentCategory === 'all' || recipe.categorie === currentCategory;
+            
+            // Search filter
+            const nameMatch = recipe.nom.toLowerCase().includes(searchTerm);
+            const ingredientMatch = recipe.ingredients.some(ing => 
+                ing.nom.toLowerCase().includes(searchTerm)
+            );
+            
+            return categoryMatch && (nameMatch || ingredientMatch);
+        });
+        
+        currentPage = 1;
+        renderRecipes();
+    };
+
+    // Render recipes (8 per page)
+    const renderRecipes = () => {
+        elements.container.innerHTML = '';
+        
+        const start = (currentPage - 1) * RECIPES_PER_PAGE;
+        const end = start + RECIPES_PER_PAGE;
+        const paginatedRecipes = filteredRecipes.slice(start, end);
+        
+        if (paginatedRecipes.length === 0) {
+            elements.container.innerHTML = `
+                <div class="col-span-4 text-center py-10">
+                    <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="mt-2 text-lg font-medium">Aucune recette trouvée</p>
+                    <p class="text-sm text-gray-500">Essayez avec d'autres termes de recherche</p>
+                </div>
+            `;
+            return;
+        }
+        
+        paginatedRecipes.forEach(recipe => {
+            elements.container.appendChild(createRecipeCard(recipe));
+        });
+        
         updatePagination();
     };
 
-    // Update pagination controls
+    // Update pagination
     const updatePagination = () => {
-        const totalPages = Math.ceil(totalRecipes.length / recipesPerPage);
-
-        // Update page numbers
-        pageNumbersContainer.innerHTML = '';
+        const totalPages = Math.ceil(filteredRecipes.length / RECIPES_PER_PAGE);
+        
+        elements.pagination.innerHTML = '';
         for (let i = 1; i <= totalPages; i++) {
-            const pageSpan = document.createElement('span');
-            pageSpan.textContent = i;
-            pageSpan.classList.add('px-4', 'py-2', 'cursor-pointer', 'hover:bg-gray-200');
-            
-            if (i === currentPage) {
-                pageSpan.classList.add('bg-black', 'text-white');
-            }
-
-            pageSpan.addEventListener('click', () => {
+            const pageBtn = document.createElement('span');
+            pageBtn.textContent = i;
+            pageBtn.className = `px-4 py-2 cursor-pointer ${currentPage === i ? 'bg-black text-white' : 'hover:bg-gray-200'}`;
+            pageBtn.addEventListener('click', () => {
                 currentPage = i;
                 renderRecipes();
             });
-
-            pageNumbersContainer.appendChild(pageSpan);
+            elements.pagination.appendChild(pageBtn);
         }
-
-        // Update prev/next button states
-        prevButton.disabled = currentPage === 1;
-        prevButton.classList.toggle('text-gray-300', currentPage === 1);
-        prevButton.classList.toggle('cursor-not-allowed', currentPage === 1);
-
-        nextButton.disabled = currentPage === totalPages;
-        nextButton.classList.toggle('text-gray-300', currentPage === totalPages);
-        nextButton.classList.toggle('cursor-not-allowed', currentPage === totalPages);
+        
+        elements.prevBtn.disabled = currentPage === 1;
+        elements.nextBtn.disabled = currentPage === totalPages || totalPages === 0;
     };
 
-    // Fetch and prepare recipes
-    fetch('../data/data.json')
-    .then(response => response.json())
-    .then(data => {
-        // Remove duplicates by creating a Set of recipe names
-        totalRecipes = Array.from(new Set(data.recettes.map(r => r.nom)))
-            .map(nom => data.recettes.find(r => r.nom === nom));
+    // Setup category buttons
+    const setupCategoryButtons = () => {
+        const setActiveCategory = (category, btn) => {
+            currentCategory = category;
+            
+            // Reset all buttons
+            Object.values(elements.categoryBtns).forEach(b => {
+                b.classList.remove('bg-[#B9625D]', 'text-white');
+                b.classList.add('bg-white', 'text-gray-700');
+            });
+            
+            // Activate selected button
+            btn.classList.add('bg-[#B9625D]', 'text-white');
+            btn.classList.remove('bg-white', 'text-gray-700');
+            
+            filterRecipes();
+        };
+        
+        elements.categoryBtns.all.addEventListener('click', () => 
+            setActiveCategory('all', elements.categoryBtns.all));
+        elements.categoryBtns.main.addEventListener('click', () => 
+            setActiveCategory('Plat principal', elements.categoryBtns.main));
+        elements.categoryBtns.starter.addEventListener('click', () => 
+            setActiveCategory('Entrée', elements.categoryBtns.starter));
+        elements.categoryBtns.dessert.addEventListener('click', () => 
+            setActiveCategory('Dessert', elements.categoryBtns.dessert));
+    };
 
-        // Initial render
-        renderRecipes();
+    // Setup search functionality
+    const setupSearch = () => {
+        elements.searchInput.addEventListener('input', () => {
+            showSearchSuggestions(elements.searchInput.value);
+            filterRecipes();
+        });
 
-        // Set up prev/next button events
-        prevButton.addEventListener('click', () => {
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!elements.searchInput.contains(e.target)) {
+                elements.suggestionsContainer.classList.add('hidden');
+            }
+        });
+
+        // Keyboard navigation for suggestions
+        elements.searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                elements.suggestionsContainer.classList.add('hidden');
+            }
+        });
+    };
+
+    // Setup pagination buttons
+    const setupPaginationButtons = () => {
+        elements.prevBtn.addEventListener('click', () => {
             if (currentPage > 1) {
                 currentPage--;
                 renderRecipes();
             }
         });
-
-        nextButton.addEventListener('click', () => {
-            const totalPages = Math.ceil(totalRecipes.length / recipesPerPage);
+        
+        elements.nextBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(filteredRecipes.length / RECIPES_PER_PAGE);
             if (currentPage < totalPages) {
                 currentPage++;
                 renderRecipes();
             }
         });
-    })
-    .catch(error => console.error('Erreur de chargement:', error));
+    };
+
+    // Initialize the app
+    const init = async () => {
+        try {
+            const response = await fetch('../data/data.json');
+            const data = await response.json();
+            allRecipes = data.recettes;
+            filteredRecipes = [...allRecipes];
+            
+            setupCategoryButtons();
+            setupSearch();
+            setupPaginationButtons();
+            
+            renderRecipes();
+            
+            // Activate "All" by default
+            elements.categoryBtns.all.classList.add('bg-[#B9625D]', 'text-white');
+            
+        } catch (error) {
+            console.error('Erreur de chargement:', error);
+            elements.container.innerHTML = `
+                <div class="col-span-4 text-center py-10">
+                    <svg class="w-12 h-12 mx-auto text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="mt-2 text-lg font-medium text-red-500">Erreur de chargement</p>
+                    <p class="text-sm text-gray-500">Impossible de charger les recettes</p>
+                </div>
+            `;
+        }
+    };
+
+    init();
 });

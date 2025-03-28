@@ -530,7 +530,7 @@
        {
           "nom":"Tiramisu",
           "categorie":"Dessert",
-          "temps_preparation":"30 minutes (+ temps de repos)",
+          "temps_preparation":"30 minutes",
           "image":"../assets/logos/tiramisu.jpg",
           "ingredients":[
              {
