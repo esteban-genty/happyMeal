@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const coursesList = document.getElementById("courses-list");
     const clearButton = document.getElementById("clear-list");
     const downloadButton = document.getElementById("download-pdf");
-    
+    //recupere depuis les ingredients dans accueil
     function loadCourses() {
         coursesList.innerHTML = "";
         let listeCourses = JSON.parse(localStorage.getItem("listeCourses")) || [];
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
             coursesList.appendChild(div);
         });
     }
-
+//boutton individuel pour chaque ingredients
     window.removeItem = (index) => {
         let listeCourses = JSON.parse(localStorage.getItem("listeCourses")) || [];
         console.log("Suppression de l'élément:", listeCourses[index]);
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("listeCourses", JSON.stringify(listeCourses));
         loadCourses();
     };
-
+// supprime toute la liste
     clearButton.addEventListener("click", () => {
         console.log("Liste vidée");
         localStorage.removeItem("listeCourses");

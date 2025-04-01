@@ -22,11 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
             searchBar.addEventListener("focus", updateSuggestions);
         })
         .catch(error => console.error("Erreur de chargement du fichier JSON :", error));
-
+//recettes aleatoire
     function getRandomRecipes() {
         return [...allRecipes].sort(() => 0.5 - Math.random()).slice(0, 3);
     }
-
+//affichage des plats au recharge de plats
     function displayRecipes(recipes) {
         const container = document.getElementById("recipes-container");
         container.innerHTML = "";
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
             card.setAttribute("data-ingredients", formatIngredients(recipe.ingredients));
             card.setAttribute("data-instructions", formatSteps(recipe.etapes));
             card.setAttribute("data-time", recipe.temps_preparation);
-
+//  affichage   vec innerHTML
             card.innerHTML = `
                 <div class="relative h-64 overflow-hidden">
                     <img src="${recipe.image}" alt="${recipe.nom}" class="w-full h-full object-cover">
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function formatSteps(etapes) {
         return etapes.join(" ");
     }
-
+// function modal debut
     function openModal(title, ingredients, instructions, time) {
         document.getElementById("modal-title").innerText = title;
         document.getElementById("modal-time").innerText = time;
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.getElementById("modal").classList.remove("hidden");
     }
-
+// fermer modal
     function closeModal() {
         document.getElementById("modal").classList.add("hidden");
     }
@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
             closeModal();
         }
     });
-
+//suggestion de barre de recherche
     function updateSuggestions() {
         const query = document.getElementById("search-bar").value.toLowerCase();
         const suggestionsContainer = document.getElementById("suggestions");
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         suggestionsContainer.classList.toggle("hidden", filteredRecipes.length === 0);
     }
-
+//ajouter pour aller vers la course
     function ajouterAListeDeCourses(ingredient) {
         let listeCourses = JSON.parse(localStorage.getItem("listeCourses")) || [];
         if (!listeCourses.includes(ingredient)) {
