@@ -242,6 +242,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    
+
     // Initialisation de l'application
     async function init() {
         try {
@@ -271,6 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
     }
+    
 
     init();
 });
