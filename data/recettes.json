@@ -8,19 +8,19 @@
           "image":"assets/logos/poullets-rotis-aux-herbes.jpg",
           "ingredients":[
              {
-                "nom":"Poulet 🍗",
+                "nom":"Poulet",
                 "quantite":"500g"
              },
              {
-                "nom":"Herbes fraîches 🌿 ",
+                "nom":"Herbes fraîches  ",
                 "quantite":"5 feuilles"
              },
              {
-                "nom":"Sel et poivre 🧂",
+                "nom":"Sel et poivre ",
                 "quantite":"10g"
              },
              {
-                "nom":"Huile d'olive 🍶",
+                "nom":"Huile d'olive ",
                 "quantite":"10g"
              }
           ],
@@ -39,27 +39,27 @@
           "image":"assets/logos/salade-de-quinoa-aux-legumes.jpg",
           "ingredients":[
              {
-                "nom":"quinoa 🌾",
+                "nom":"quinoa ",
                 "quantite":"200g"
              },
              {
-                "nom":"Poivron 🫑",
+                "nom":"Poivron ",
                 "quantite":"3 piéces"
              },
              {
-                "nom":"Sel et poivre 🧂",
+                "nom":"Sel et poivre ",
                 "quantite":"10g"
              },
              {
-                "nom":"Huile d'olive 🍶",
+                "nom":"Huile d'olive ",
                 "quantite":"10g"
              },
              {
-                "nom":"Jus de citron 🍋",
+                "nom":"Jus de citron ",
                 "quantite":"10g"
              },
              {
-                "nom":"Huile d'olive 🍶",
+                "nom":"Huile d'olive ",
                 "quantite":"10g"
              }
           ],
@@ -78,27 +78,27 @@
           "image":"assets/logos/tarte-aux-pommes1.jpg",
           "ingredients":[
              {
-                "nom":"Pâte brisée 🥧",
+                "nom":"Pâte brisée ",
                 "quantite":"100g"
              },
              {
-                "nom":"Pomme 🍎",
+                "nom":"Pomme ",
                 "quantite":"3 piéces"
              },
              {
-                "nom":"Sucre 🧂",
+                "nom":"Sucre ",
                 "quantite":"50g"
              },
              {
-                "nom":"Canelle 🌿",
+                "nom":"Canelle ",
                 "quantite":"10g"
              },
              {
-                "nom":"Beurre 🧈",
+                "nom":"Beurre ",
                 "quantite":"10g"
              },
              {
-                "nom":"Huile d'olive 🍶",
+                "nom":"Huile d'olive ",
                 "quantite":"10g"
              }
           ],
@@ -119,27 +119,27 @@
           "image":"assets/logos/soupelentilles.jpg",
           "ingredients":[
              {
-                "nom":"Lentille 🌱",
+                "nom":"Lentille ",
                 "quantite":"250g"
              },
              {
-                "nom":"Oignon 🧅 ",
+                "nom":"Oignon  ",
                 "quantite":"3 piéces"
              },
              {
-                "nom":"Carottes 🥕",
+                "nom":"Carottes ",
                 "quantite":"50g"
              },
              {
-                "nom":"Celeri 🌱",
+                "nom":"Celeri ",
                 "quantite":"10g"
              },
              {
-                "nom":"Beurre 🧈",
+                "nom":"Beurre ",
                 "quantite":"10g"
              },
              {
-                "nom":"Huile d'olive 🍶",
+                "nom":"Huile d'olive ",
                 "quantite":"10g"
              }
           ],
@@ -160,27 +160,27 @@
           "image":"assets/logos/pates-carbonara.jpg",
           "ingredients":[
              {
-                "nom":"Pates 🍝",
+                "nom":"Pates ",
                 "quantite":"500g"
              },
              {
-                "nom":"Lardon 🥓",
+                "nom":"Lardon ",
                 "quantite":"300g"
              },
              {
-                "nom":"Oeuf 🥚",
+                "nom":"Oeuf ",
                 "quantite":"3 piéces"
              },
              {
-                "nom":"Parmesan 🧀",
+                "nom":"Parmesan ",
                 "quantite":"50g"
              },
              {
-                "nom":"Beurre 🧈",
+                "nom":"Beurre ",
                 "quantite":"10g"
              },
              {
-                "nom":"Huile d'olive 🍶",
+                "nom":"Huile d'olive ",
                 "quantite":"10g"
              }
           ],
@@ -202,27 +202,27 @@
           "image":"assets/logos/risotto-champignons.jpeg",
           "ingredients":[
              {
-                "nom":"Riz 🍚",
+                "nom":"Riz ",
                 "quantite":"300g"
              },
              {
-                "nom":"Oigons 🧅",
+                "nom":"Oigons ",
                 "quantite":"3 piéces"
              },
              {
-                "nom":"Vin blanc 🍾",
+                "nom":"Vin blanc ",
                 "quantite":"50g"
              },
              {
-                "nom":"Parmesan 🧀",
+                "nom":"Parmesan ",
                 "quantite":"50g"
              },
              {
-                "nom":"Beurre 🧈",
+                "nom":"Beurre ",
                 "quantite":"10g"
              },
              {
-                "nom":"Huile d'olive 🍶",
+                "nom":"Huile d'olive ",
                 "quantite":"10g"
              }
           ],
@@ -246,19 +246,19 @@
           "image":"assets/logos/salade-de-fruits.jpg",
           "ingredients":[
             {
-               "nom":"Fruits variés 🍒",
+               "nom":"Fruits variés ",
                "quantite":"300g"
             },
             {
-               "nom":"Jus d'orange 🍊",
+               "nom":"Jus d'orange ",
                "quantite":"25cl"
             },
             {
-               "nom":"Miel ou sirop 🍯",
+               "nom":"Miel ou sirop ",
                "quantite":"5cl"
             },
             {
-               "nom":"Feuilles de menthe fraiche pour garnir 🌿",
+               "nom":"Feuilles de menthe fraiche pour garnir ",
                "quantite":"5 feuilles"
             }
             
@@ -279,27 +279,27 @@
           "image":"assets/logos/ratatouilles-provencale.jpg",
           "ingredients":[
              {
-                "nom":"Aubergine 🍆",
+                "nom":"Aubergine ",
                 "quantite":"1 piéces"
              },
              {
-                "nom":"Courgette 🥒" ,
+                "nom":"Courgette " ,
                 "quantite":"3 piéces"
              },
              {
-                "nom":"Poivron 🫑",
+                "nom":"Poivron ",
                 "quantite":"2 piéces"
              },
              {
-                "nom":"Tomate 🍅",
+                "nom":"Tomate ",
                 "quantite":"4 piéces"
              },
              {
-                "nom":"Oignon 🧅",
+                "nom":"Oignon ",
                 "quantite":"2 piéces"
              },
              {
-                "nom":"Huile d'olive 🍶",
+                "nom":"Huile d'olive ",
                 "quantite":"10g"
              }
           ],
@@ -321,27 +321,27 @@
           "image":"assets/logos/salade-cesar.jpg",
           "ingredients":[
              {
-                "nom":"Laitue 🥬",
+                "nom":"Laitue ",
                 "quantite":"1 piéces"
              },
              {
-                "nom":"Poulet 🐔",
+                "nom":"Poulet ",
                 "quantite":"1 piéces"
              },
              {
-                "nom":"Crouton 🍞 ",
+                "nom":"Crouton  ",
                 "quantite":"50g"
              },
              {
-                "nom":"Parmesan 🧀",
+                "nom":"Parmesan ",
                 "quantite":"50g"
              },
              {
-                "nom":"Beurre 🧈",
+                "nom":"Beurre ",
                 "quantite":"10g"
              },
              {
-                "nom":"Huile d'olive 🍶",
+                "nom":"Huile d'olive ",
                 "quantite":"10g"
              }
           ],
@@ -361,27 +361,27 @@
           "image":"assets/logos/risotto-champignons.jpeg",
           "ingredients":[
              {
-                "nom":"Riz 🍚",
+                "nom":"Riz ",
                 "quantite":"100g"
              },
              {
-                "nom":"Champignons 🍄",
+                "nom":"Champignons ",
                 "quantite":"500g"
              },
              {
-                "nom":"Oignons 🧅",
+                "nom":"Oignons ",
                 "quantite":"3 piéces"
              },
              {
-                "nom":"Vin blanc 🍾",
+                "nom":"Vin blanc ",
                 "quantite":"50g"
              },
              {
-                "nom":"Beurre 🧈",
+                "nom":"Beurre ",
                 "quantite":"50g"
              },
              {
-                "nom":"Huile d'olive 🍶",
+                "nom":"Huile d'olive ",
                 "quantite":"10g"
              }
           ],
@@ -405,27 +405,27 @@
           "image":"assets/logos/muffins-myrtilles.jpg",
           "ingredients":[
              {
-                "nom":"Farine 🌾",
+                "nom":"Farine ",
                 "quantite":"200g"
              },
              {
-                "nom":"Sucre 🧂",
+                "nom":"Sucre ",
                 "quantite":"100g"
              },
              {
-                "nom":"Levure 🧃",
+                "nom":"Levure ",
                 "quantite":"10g"
              },
              {
-                "nom":"Lait 🥛",
+                "nom":"Lait ",
                 "quantite":"100g"
              },
              {
-                "nom":"Oeuf 🥚",
+                "nom":"Oeuf ",
                 "quantite":"1 piéces"
              },
              {
-                "nom":"Myrtilles 🫐",
+                "nom":"Myrtilles ",
                 "quantite":"150g"
              }
           ],
@@ -451,23 +451,23 @@
                 "quantite":"150g"
              },
              {
-                "nom":"Aubergine 🍆",
+                "nom":"Aubergine ",
                 "quantite":"3piéces"
              },
              {
-                "nom":"Courgette 🥒",
+                "nom":"Courgette ",
                 "quantite":"5 piéces"
              },
              {
-                "nom":"Poivon 🫑",
+                "nom":"Poivon ",
                 "quantite":"3 piéces"
              },
              {
-                "nom":"Beurre 🧈",
+                "nom":"Beurre ",
                 "quantite":"10g"
              },
              {
-                "nom":"Huile d'olive 🍶",
+                "nom":"Huile d'olive ",
                 "quantite":"10g"
              }
           ],
@@ -494,27 +494,27 @@
                 "quantite":"1 piéces"
              },
              {
-                "nom":"Thon 🐟",
+                "nom":"Thon ",
                 "quantite":"3 piéces"
              },
              {
-                "nom":"Oeuf 🥚",
+                "nom":"Oeuf ",
                 "quantite":"3 piéces"
              },
              {
-                "nom":"Tomates 🍅",
+                "nom":"Tomates ",
                 "quantite":"4 piéces"
              },
              {
-                "nom":"Poivron 🫑",
+                "nom":"Poivron ",
                 "quantite":"4 piéces"
              },
              {
-                "nom":"Haricot verts 🫑",
+                "nom":"Haricot verts ",
                 "quantite":"400g"
              },
              {
-                "nom":"Huile d'olive 🍶",
+                "nom":"Huile d'olive ",
                 "quantite":"10g"
              }
           ],
@@ -534,27 +534,27 @@
           "image":"assets/logos/tiramisu.jpg",
           "ingredients":[
              {
-                "nom":"Mascarpone 🍰",
+                "nom":"Mascarpone ",
                 "quantite":"250"
              },
              {
-                "nom":"Oeuf 🥚",
+                "nom":"Oeuf ",
                 "quantite":"3 piéces"
              },
              {
-                "nom":"Sucre 🧂",
+                "nom":"Sucre ",
                 "quantite":"80g"
              },
              {
-                "nom":"Vanille 🍦",
+                "nom":"Vanille ",
                 "quantite":"10g"
              },
              {
-                "nom":"Café ☕",
+                "nom":"Café ",
                 "quantite":"10g"
              },
              {
-                "nom":"Cacao 🍫",
+                "nom":"Cacao ",
                 "quantite":"10g"
              }
           ],
