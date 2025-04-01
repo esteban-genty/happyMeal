@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         listeCourses.forEach((item, index) => {
             const div = document.createElement("div");
-            div.className = "flex items-center justify-between bg-gray-300 px-4 py-2 rounded-full shadow-md w-full text-center";
+            div.className = "flex items-center justify-between bg-[#FFFFFF] px-4 py-2 rounded-full shadow-md w-full text-center";
             div.innerHTML = `
                 <span class="flex-1">${item}</span>
                 <button class="text-red-600 text-xl font-bold ml-2" onclick="removeItem(${index})">✖</button>
