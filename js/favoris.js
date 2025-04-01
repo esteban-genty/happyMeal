@@ -1,6 +1,6 @@
 function afficherFavoris() {
     const container = document.getElementById('recettes-favoris');
-    let recettesFavoris = JSON.parse(localStorage.getItem('recettes')) || [];
+    let recettesFavoris = JSON.parse(localStorage.getItem('recettes'));
 
     //console.log('Recettes enregistrées :', recettesFavoris);
 
@@ -14,7 +14,7 @@ function afficherFavoris() {
         recettesFavoris.forEach(recette => {
             const recetteDiv = document.createElement('div');
             recetteDiv.classList.add('recette');
-            recetteDiv.innerHTML = `
+            recetteDiv.innerHTML = ` 
             <div class="relative h-64 overflow-hidden">
                 <img 
                     src="${recette.image}" 

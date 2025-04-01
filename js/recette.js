@@ -1,13 +1,18 @@
-document.addEventListener('DOMContentLoaded', () => {
+function afficherRecette() {
+    // Container recettes
     const container = document.getElementById('recettes-container');
+
+    // Container pagination
     const buttonRetour = document.getElementById('prev-button');
     const buttonSuivant = document.getElementById('next-button');
     const pageNumbers = document.getElementById('page-numbers');
 
+    // Pagination paramètres
     const recettesParPage = 8;
     let pageActuelle = 1;
     let recettes = [];
 
+    // Chargement des recettes depuis le fichier JSON
     fetch('../data/data.json')
         .then(response => response.json())
         .then(data => {
@@ -16,9 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Erreur de chargement:', error));
 
+    // Fonction pour afficher les recettes
     function afficherPage() {
         container.innerHTML = '';
 
+        // Calculer le début et la fin des recettes à afficher
         let debut = (pageActuelle - 1) * recettesParPage;
         let fin = debut + recettesParPage;
         let recettesAffichees = recettes.slice(debut, fin);
@@ -54,6 +61,23 @@ document.addEventListener('DOMContentLoaded', () => {
         ajouterFavoris();
     }
 
+    function afficherPopup() {
+        const popup = document.getElementById("popup");
+    
+        popup.classList.remove("hidden"); 
+        popup.classList.add("opacity-100");
+    
+        setTimeout(() => {
+            popup.classList.add("opacity-0");
+            popup.classList.remove("opacity-100");
+    
+            setTimeout(() => {
+                popup.classList.add("hidden");
+            }, 500);
+        }, 1500);
+    }
+    
+
     function ajouterFavoris() {
         document.querySelectorAll('.favoris-btn').forEach(button => {
             button.addEventListener('click', function() {
@@ -65,21 +89,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     recettesFavoris.push(recetteToFavoris);
                     localStorage.setItem('recettes', JSON.stringify(recettesFavoris));
                     afficherPopup();
+                }else{
+                    console.log("Recette déjà dans les favoris");
                 }
             });
         });
     }
 
-    function afficherPopup() {
-        const popup = document.getElementById("popup");
-        popup.classList.remove("hidden", "opacity-0");
-        popup.classList.add("opacity-100");
+    function afficherRecettes(){
 
-        setTimeout(() => {
-            popup.classList.remove("opacity-100");
-            popup.classList.add("opacity-0");
-            setTimeout(() => popup.classList.add("hidden"), 500);
-        }, 1500);
     }
 
     buttonRetour.addEventListener('click', () => {
@@ -95,4 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
             afficherPage();
         }
     });
-});
+}
+
+afficherRecette();
