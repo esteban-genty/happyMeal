@@ -1,33 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Configuration de base
     const RECIPES_PER_PAGE = 8;
     let currentPage = 1;
     let allRecipes = [];
     let filteredRecipes = [];
     let currentCategory = 'all';
 
-    // DOM Elements
-    const elements = {
-        container: document.getElementById('recettes-container'),
-        prevBtn: document.getElementById('prev-button'),
-        nextBtn: document.getElementById('next-button'),
-        pagination: document.getElementById('page-numbers'),
-        searchInput: document.getElementById('searchInput'),
-        suggestionsContainer: document.getElementById('searchSuggestions'),
-        categoryBtns: {
-            all: document.getElementById('btn-all'),
-            main: document.getElementById('btn-main'),
-            starter: document.getElementById('btn-starter'),
-            dessert: document.getElementById('btn-dessert')
-        }
+    // Éléments du DOM
+    const container = document.getElementById('recettes-container');
+    const prevBtn = document.getElementById('prev-button');
+    const nextBtn = document.getElementById('next-button');
+    const pagination = document.getElementById('page-numbers');
+    const searchInput = document.getElementById('searchInput');
+    const suggestionsContainer = document.getElementById('searchSuggestions');
+    
+    // Boutons de catégorie
+    const categoryBtns = {
+        all: document.getElementById('btn-all'),
+        main: document.getElementById('btn-main'),
+        starter: document.getElementById('btn-starter'),
+        dessert: document.getElementById('btn-dessert')
     };
 
-    // Normalize string for better search
-    const normalizeString = (str) => {
-        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    };
+    // Normalisation du texte pour la recherche
+    function normalizeText(text) {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
 
-    // Create recipe card
-    const createRecipeCard = (recipe) => {
+    // Création d'une carte de recette
+    function createRecipeCard(recipe) {
         const card = document.createElement('div');
         card.className = 'relative w-[285px] bg-white rounded-lg overflow-hidden shadow-lg transform transition-transform hover:scale-105';
         card.innerHTML = `
@@ -51,96 +52,93 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         return card;
-    };
+    }
 
-    // Show search suggestions
-    const showSearchSuggestions = (searchTerm) => {
-        elements.suggestionsContainer.innerHTML = '';
+    // Affichage des suggestions de recherche
+    function showSearchSuggestions(searchTerm) {
+        suggestionsContainer.innerHTML = '';
         
         if (searchTerm.length < 2) {
-            elements.suggestionsContainer.classList.add('hidden');
+            suggestionsContainer.classList.add('hidden');
             return;
         }
 
-        const term = normalizeString(searchTerm);
-        
-        // Recipe name matches
-        const recipeMatches = allRecipes.filter(recipe => 
-            normalizeString(recipe.nom).includes(term)
-        ).slice(0, 3);
+        const term = normalizeText(searchTerm);
+        const suggestions = new Set();
 
-        // Ingredient matches
-        const ingredientMatches = [];
+        // Recherche dans les noms de recettes
+        allRecipes.forEach(recipe => {
+            if (normalizeText(recipe.nom).includes(term)) {
+                suggestions.add(JSON.stringify({
+                    type: 'recette',
+                    name: recipe.nom,
+                    category: recipe.categorie
+                }));
+            }
+        });
+
+        // Recherche dans les ingrédients
         allRecipes.forEach(recipe => {
             recipe.ingredients.forEach(ing => {
-                if (normalizeString(ing.nom).includes(term)) {
-                    if (!ingredientMatches.some(i => i.nom === ing.nom)) {
-                        ingredientMatches.push(ing);
-                    }
+                if (normalizeText(ing.nom).includes(term)) {
+                    suggestions.add(JSON.stringify({
+                        type: 'ingrédient',
+                        name: ing.nom
+                    }));
                 }
             });
         });
 
-        // Show suggestions
-        if (recipeMatches.length === 0 && ingredientMatches.length === 0) {
-            elements.suggestionsContainer.classList.add('hidden');
+        // Affichage des suggestions
+        if (suggestions.size === 0) {
+            suggestionsContainer.classList.add('hidden');
             return;
         }
 
-        elements.suggestionsContainer.classList.remove('hidden');
+        suggestionsContainer.classList.remove('hidden');
         
-        recipeMatches.forEach(recipe => {
-            const suggestion = document.createElement('div');
-            suggestion.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center';
-            suggestion.innerHTML = `
-                <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
-                <span class="font-semibold">${recipe.nom}</span>
-                <span class="text-xs text-gray-500 ml-2">${recipe.categorie}</span>
-            `;
-            suggestion.addEventListener('click', () => {
-                elements.searchInput.value = recipe.nom;
-                filterRecipes();
-                elements.suggestionsContainer.classList.add('hidden');
+        Array.from(suggestions)
+            .slice(0, 5) // Limite à 5 suggestions
+            .map(s => JSON.parse(s))
+            .forEach(suggestion => {
+                const div = document.createElement('div');
+                div.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center';
+                
+                div.innerHTML = `
+                    <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    <span class="font-semibold">${suggestion.name}</span>
+                    ${suggestion.category 
+                        ? `<span class="text-xs text-gray-500 ml-2">${suggestion.category}</span>`
+                        : '<span class="text-xs text-gray-500 ml-2">Ingrédient</span>'}
+                `;
+                
+                div.addEventListener('click', () => {
+                    searchInput.value = suggestion.name;
+                    filterRecipes();
+                    suggestionsContainer.classList.add('hidden');
+                });
+                
+                suggestionsContainer.appendChild(div);
             });
-            elements.suggestionsContainer.appendChild(suggestion);
-        });
+    }
 
-        ingredientMatches.slice(0, 3).forEach(ing => {
-            const suggestion = document.createElement('div');
-            suggestion.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center';
-            suggestion.innerHTML = `
-                <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
-                <span class="font-semibold">${ing.nom}</span>
-                <span class="text-xs text-gray-500 ml-2">Ingrédient</span>
-            `;
-            suggestion.addEventListener('click', () => {
-                elements.searchInput.value = ing.nom;
-                filterRecipes();
-                elements.suggestionsContainer.classList.add('hidden');
-            });
-            elements.suggestionsContainer.appendChild(suggestion);
-        });
-    };
-
-    // Filter recipes
-    const filterRecipes = () => {
-        const searchTerm = normalizeString(elements.searchInput.value);
+    // Filtrage des recettes
+    function filterRecipes() {
+        const searchTerm = normalizeText(searchInput.value);
         
         filteredRecipes = allRecipes.filter(recipe => {
-            // Category filter
+            // Filtre par catégorie
             const categoryMatch = currentCategory === 'all' || recipe.categorie === currentCategory;
             
-            // If no search term, return category matches
+            // Si pas de terme de recherche, retourne les correspondances de catégorie
             if (!searchTerm) return categoryMatch;
             
-            // Search filter
-            const nameMatch = normalizeString(recipe.nom).includes(searchTerm);
+            // Filtre par recherche
+            const nameMatch = normalizeText(recipe.nom).includes(searchTerm);
             const ingredientMatch = recipe.ingredients.some(ing => 
-                normalizeString(ing.nom).includes(searchTerm)
+                normalizeText(ing.nom).includes(searchTerm)
             );
             
             return categoryMatch && (nameMatch || ingredientMatch);
@@ -148,18 +146,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         currentPage = 1;
         renderRecipes();
-    };
+    }
 
-    // Render recipes (8 per page)
-    const renderRecipes = () => {
-        elements.container.innerHTML = '';
+    // Affichage des recettes
+    function renderRecipes() {
+        container.innerHTML = '';
         
         const start = (currentPage - 1) * RECIPES_PER_PAGE;
         const end = start + RECIPES_PER_PAGE;
         const paginatedRecipes = filteredRecipes.slice(start, end);
         
         if (paginatedRecipes.length === 0) {
-            elements.container.innerHTML = `
+            container.innerHTML = `
                 <div class="col-span-4 text-center py-10">
                     <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -172,17 +170,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         paginatedRecipes.forEach(recipe => {
-            elements.container.appendChild(createRecipeCard(recipe));
+            container.appendChild(createRecipeCard(recipe));
         });
         
         updatePagination();
-    };
+    }
 
-    // Update pagination
-    const updatePagination = () => {
+    // Mise à jour de la pagination
+    function updatePagination() {
         const totalPages = Math.ceil(filteredRecipes.length / RECIPES_PER_PAGE);
         
-        elements.pagination.innerHTML = '';
+        pagination.innerHTML = '';
         for (let i = 1; i <= totalPages; i++) {
             const pageBtn = document.createElement('span');
             pageBtn.textContent = i;
@@ -191,83 +189,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentPage = i;
                 renderRecipes();
             });
-            elements.pagination.appendChild(pageBtn);
+            pagination.appendChild(pageBtn);
         }
         
-        elements.prevBtn.disabled = currentPage === 1;
-        elements.nextBtn.disabled = currentPage === totalPages || totalPages === 0;
-    };
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+    }
 
-    // Setup category buttons
-    const setupCategoryButtons = () => {
-        const setActiveCategory = (category, btn) => {
+    // Configuration des boutons de catégorie
+    function setupCategoryButtons() {
+        function setActiveCategory(category, btn) {
             currentCategory = category;
             
-            // Reset all buttons
-            Object.values(elements.categoryBtns).forEach(b => {
+            // Réinitialisation des boutons
+            Object.values(categoryBtns).forEach(b => {
                 b.classList.remove('bg-[#B9625D]', 'text-white');
                 b.classList.add('bg-white', 'text-gray-700');
             });
             
-            // Activate selected button
+            // Activation du bouton sélectionné
             btn.classList.add('bg-[#B9625D]', 'text-white');
             btn.classList.remove('bg-white', 'text-gray-700');
             
             filterRecipes();
-        };
+        }
         
-        elements.categoryBtns.all.addEventListener('click', () => 
-            setActiveCategory('all', elements.categoryBtns.all));
-        elements.categoryBtns.main.addEventListener('click', () => 
-            setActiveCategory('Plat principal', elements.categoryBtns.main));
-        elements.categoryBtns.starter.addEventListener('click', () => 
-            setActiveCategory('Entrée', elements.categoryBtns.starter));
-        elements.categoryBtns.dessert.addEventListener('click', () => 
-            setActiveCategory('Dessert', elements.categoryBtns.dessert));
-    };
+        categoryBtns.all.addEventListener('click', () => setActiveCategory('all', categoryBtns.all));
+        categoryBtns.main.addEventListener('click', () => setActiveCategory('Plat principal', categoryBtns.main));
+        categoryBtns.starter.addEventListener('click', () => setActiveCategory('Entrée', categoryBtns.starter));
+        categoryBtns.dessert.addEventListener('click', () => setActiveCategory('Dessert', categoryBtns.dessert));
+    }
 
-    // Setup search functionality
-    const setupSearch = () => {
-        elements.searchInput.addEventListener('input', () => {
-            showSearchSuggestions(elements.searchInput.value);
+    // Configuration de la recherche
+    function setupSearch() {
+        searchInput.addEventListener('input', () => {
+            showSearchSuggestions(searchInput.value);
             filterRecipes();
         });
 
-        // Hide suggestions when clicking outside
+        // Masquage des suggestions quand on clique ailleurs
         document.addEventListener('click', (e) => {
-            if (!elements.searchInput.contains(e.target) && !elements.suggestionsContainer.contains(e.target)) {
-                elements.suggestionsContainer.classList.add('hidden');
+            if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
+                suggestionsContainer.classList.add('hidden');
             }
         });
 
-        // Keyboard navigation for suggestions
-        elements.searchInput.addEventListener('keydown', (e) => {
+        // Masquage avec la touche Escape
+        searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                elements.suggestionsContainer.classList.add('hidden');
+                suggestionsContainer.classList.add('hidden');
             }
         });
-    };
+    }
 
-    // Setup pagination buttons
-    const setupPaginationButtons = () => {
-        elements.prevBtn.addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                renderRecipes();
-            }
-        });
-        
-        elements.nextBtn.addEventListener('click', () => {
-            const totalPages = Math.ceil(filteredRecipes.length / RECIPES_PER_PAGE);
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderRecipes();
-            }
-        });
-    };
-
-    // Initialize the app
-    const init = async () => {
+    // Initialisation de l'application
+    async function init() {
         try {
             const response = await fetch('../data/data.json');
             const data = await response.json();
@@ -276,16 +252,15 @@ document.addEventListener('DOMContentLoaded', () => {
             
             setupCategoryButtons();
             setupSearch();
-            setupPaginationButtons();
             
             renderRecipes();
             
-            // Activate "All" by default
-            elements.categoryBtns.all.classList.add('bg-[#B9625D]', 'text-white');
+            // Activation de "Tous" par défaut
+            categoryBtns.all.classList.add('bg-[#B9625D]', 'text-white');
             
         } catch (error) {
             console.error('Erreur de chargement:', error);
-            elements.container.innerHTML = `
+            container.innerHTML = `
                 <div class="col-span-4 text-center py-10">
                     <svg class="w-12 h-12 mx-auto text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -295,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         }
-    };
+    }
 
     init();
 });
