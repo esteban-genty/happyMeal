@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     let allRecipes = [];
 
-    fetch("../data/recettes.json")
+    fetch("./data/recettes.json")
         .then(response => {
             if (!response.ok) {
                 throw new Error("Erreur HTTP : " + response.status);

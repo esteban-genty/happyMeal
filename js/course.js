@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (listeCourses.length === 0) {
             coursesList.innerHTML = '<p class="text-gray-500 text-center italic col-span-4">Aucun ingrédient dans la liste</p>';
+             
             return;
         }
         
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
             div.className = "flex items-center justify-between bg-[#FFFFFF] px-4 py-2 rounded-full shadow-md w-full text-center";
             div.innerHTML = `
                 <span class="flex-1">${item}</span>
+                
                 <button class="text-red-600 text-xl font-bold ml-2" onclick="removeItem(${index})">✖</button>
             `;
             coursesList.appendChild(div);
