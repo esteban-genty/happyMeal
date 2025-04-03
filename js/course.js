@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Liste actuelle des courses:", listeCourses);
         
         if (listeCourses.length === 0) {
-            coursesList.innerHTML = '<p class="text-gray-500 text-center italic col-span-4">Aucun ingrédient dans la liste</p>';
+            coursesList.innerHTML = ' <p class="text-gray-500 text-center italic col-span-4"> Aucun ingrédient dans la liste</p>';
              
             return;
         }
