@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
             card.setAttribute("data-time", recipe.temps_preparation);
 //  affichage   vec innerHTML
             card.innerHTML = `
-                <div class="relative h-64 overflow-hidden">
+                <div class="relative h-64 overflow-hidden  ">
                     <img src="${recipe.image}" alt="${recipe.nom}" class="w-full h-full object-cover">
                     <div class="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-3 py-1 rounded-md">${recipe.nom}</div>
                     <div class="absolute top-3 right-3 bg-white bg-opacity-80 px-3 py-1 rounded-md">${recipe.categorie}</div>
@@ -88,9 +88,13 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("modal-title").innerText = title;
         document.getElementById("modal-time").innerText = time;
         document.getElementById("modal-prep").innerText = instructions;
-
+        
         const ingredientsContainer = document.getElementById("modal-ingredients");
         ingredientsContainer.innerHTML = "";
+
+      
+
+
 
         ingredients.split(", ").forEach(ing => {
             const btn = document.createElement("button");
