@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planning des repas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <header class="bg-white shadow-md py-4">
+        <nav class="container mx-auto flex justify-between items-center px-6">
+            <ul class="flex space-x-6">
+                <li><a href="index.html" class="text-gray-700 hover:text-orange-500">Accueil</a></li>
+                <li><a href="recettes.html" class="text-gray-700 hover:text-orange-500">Toutes les Recettes</a></li>
+                <li><a href="planning.html" class="text-orange-500 font-bold border-b-2 border-orange-500">Planning</a></li>
+                <li><a href="favoris.html" class="text-gray-700 hover:text-orange-500">Favoris</a></li>
+                <li><a href="courses.html" class="text-gray-700 hover:text-orange-500">Liste des Courses</a></li> 
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container mx-auto py-8 px-6">
+        <h1 class="text-3xl font-bold text-center mb-6">Mon Planning des Repas</h1>
+
+        <div class="text-center mb-6">
+            <button id="exportPDF" class="bg-orange-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-orange-600 transition">Exporter en PDF</button>
+        </div>
+
+        <div id="planning" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="day bg-white shadow-lg rounded-lg p-6" data-day="Lundi"><h2 class="text-xl font-semibold">Lundi</h2><ul class="mt-2"></ul></div>
+            <div class="day bg-white shadow-lg rounded-lg p-6" data-day="Mardi"><h2 class="text-xl font-semibold">Mardi</h2><ul class="mt-2"></ul></div>
+            <div class="day bg-white shadow-lg rounded-lg p-6" data-day="Mercredi"><h2 class="text-xl font-semibold">Mercredi</h2><ul class="mt-2"></ul></div>
+            <div class="day bg-white shadow-lg rounded-lg p-6" data-day="Jeudi"><h2 class="text-xl font-semibold">Jeudi</h2><ul class="mt-2"></ul></div>
+            <div class="day bg-white shadow-lg rounded-lg p-6" data-day="Vendredi"><h2 class="text-xl font-semibold">Vendredi</h2><ul class="mt-2"></ul></div>
+            <div class="day bg-white shadow-lg rounded-lg p-6" data-day="Samedi"><h2 class="text-xl font-semibold">Samedi</h2><ul class="mt-2"></ul></div>
+            <div class="day bg-white shadow-lg rounded-lg p-6" data-day="Dimanche"><h2 class="text-xl font-semibold">Dimanche</h2><ul class="mt-2"></ul></div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="planning.js"></script> 
+</body>
+</html>
