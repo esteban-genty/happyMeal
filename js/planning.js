@@ -9,19 +9,18 @@ function savePlanning(planning) {
     localStorage.setItem("planning", JSON.stringify(planning));
 }
 
-function addToPlanning(mealId, selectElement) {
-    let day = selectElement.value; 
-
+function addToPlanning(recipeName, selectElement) {
+    let day = selectElement.value;
     if (!day) return;
-    day = day.toLowerCase(); 
+    day = day.toLowerCase();
 
     let planning = getPlanning();
     if (!planning[day]) {
         planning[day] = [];
     }
 
-    if (!planning[day].includes(mealId)) {
-        planning[day].push(mealId);
+    if (!planning[day].includes(recipeName)) {
+        planning[day].push(recipeName);
     }
 
     savePlanning(planning);
@@ -31,21 +30,24 @@ function addToPlanning(mealId, selectElement) {
 
 async function loadPlanning() {
     try {
-        let res = await fetch("recettes.json");
+        let res = await fetch("../data/recettes.json");
         let data = await res.json();
-        let allMeals = data.recettes.map((meal, index) => ({ ...meal, id: index + 1 }));
+        let allMeals = data.recettes;
+
+        document.querySelectorAll('.day').forEach(dayDiv => {
+            const ul = dayDiv.querySelector("ul");
+            ul.innerHTML = ""; 
+        });
 
         let planning = getPlanning();
 
         for (let day in planning) {
             let formattedDay = day.charAt(0).toUpperCase() + day.slice(1); 
-            
             let dayContainer = document.querySelector(`.day[data-day="${formattedDay}"] ul`);
             if (!dayContainer) continue;
 
-            dayContainer.innerHTML = planning[day].map(id => {
-                let meal = allMeals.find(m => m.id === id);
-                return meal ? `<li>${meal.nom} <button onclick="removeFromPlanning('${day}', ${id})">❌</button></li>` : "";
+            dayContainer.innerHTML = planning[day].map(nom => {
+                return `<li>${nom} <button onclick="removeFromPlanning('${day}', '${nom}')">❌</button></li>`;
             }).join('');
         }
     } catch (error) {
@@ -53,73 +55,56 @@ async function loadPlanning() {
     }
 }
 
-function removeFromPlanning(day, mealId) {
+
+function removeFromPlanning(day, recipeName) {
     let planning = getPlanning();
-    planning[day] = planning[day].filter(id => id !== mealId);
-    
+    planning[day] = planning[day].filter(nom => nom !== recipeName);
+
     if (planning[day].length === 0) {
-        delete planning[day]; 
+        delete planning[day];
     }
 
     savePlanning(planning);
-    loadPlanning(); 
 
-    let dayContainer = document.querySelector(`.day[data-day="${day.charAt(0).toUpperCase() + day.slice(1)}"] ul`);
-    if (dayContainer && (!planning[day] || planning[day].length === 0)) {
-        dayContainer.innerHTML = ""; 
-    }
+    setTimeout(() => {
+        loadPlanning();
+    }, 100);
 }
 
 
-loadPlanning();
-
-
-
-async function exportToPDF() {
+function exportToPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    let planning = getPlanning();
-    
+    const planning = getPlanning();
+
     if (Object.keys(planning).length === 0) {
         alert("Le planning est vide. Ajoutez des repas avant d'exporter.");
         return;
     }
 
-    try {
-        let res = await fetch("recettes.json");
-        let data = await res.json();
-        let allMeals = data.recettes.map((meal, index) => ({ ...meal, id: index + 1 }));
+    doc.setFont("helvetica", "bold");
+    doc.text("Planning des repas", 20, 20);
+    doc.setFont("helvetica", "normal");
 
-        doc.setFont("helvetica", "bold");
-        doc.text("Planning des repas", 20, 20);
-        doc.setFont("helvetica", "normal");
+    let y = 30;
 
-        let y = 30;
+    for (let day in planning) {
+        doc.setFontSize(14);
+        doc.text(day.charAt(0).toUpperCase() + day.slice(1), 20, y);
+        y += 8;
 
-        for (let day in planning) {
-            doc.setFontSize(14);
-            doc.text(day, 20, y);
-            y += 8;
+        planning[day].forEach(mealName => {
+            doc.setFontSize(12);
+            doc.text(`- ${mealName}`, 25, y);
+            y += 6;
+        });
 
-            planning[day].forEach(mealId => {
-                let meal = allMeals.find(m => m.id === mealId);
-                let mealName = meal ? meal.nom : "Recette inconnue"; 
-
-                doc.setFontSize(12);
-                doc.text(`- ${mealName}`, 25, y);
-                y += 6;
-            });
-
-            y += 5; 
-        }
-
-        doc.save("planning_repas.pdf"); 
-    } catch (error) {
-        console.error("Erreur :", error);
-        alert("Erreur lors de l'exportation du PDF.");
+        y += 5;
     }
+
+    doc.save("planning_repas.pdf");
 }
 
 exportPDFButton.addEventListener("click", exportToPDF);
-
+loadPlanning();
