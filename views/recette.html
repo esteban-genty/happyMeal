@@ -15,28 +15,34 @@
     </div>
     
     <!-- Header -->
-    <header class="bg-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-            <!-- Logo à gauche -->
-            <div class="flex-shrink-0">
-                <img src="../assets/logos/logo-transparent-png.png" alt="HappyMeal Logo" class="h-12">
-            </div>
-    
-            <!-- Liens au centre -->
-            <nav class="hidden md:flex space-x-8 mx-auto">
-                <a href="planning.html" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition font-bold">Planning</a>
-                <a href="favoris.html" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition font-bold">Favoris</a>
-                <a href="recette.html" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition font-bold">Recettes</a>
-                <a href="courses.html" class="text-black px-6 py-2 rounded-lg hover:text-[#B9625D] transition font-bold">Courses</a>
-            </nav>
-    
-            <!-- Bouton à droite -->
-            <a href="recette.html" class="flex items-center bg-orange-300 text-white px-8 py-2 hover:bg-orange-400 transition shadow-lg font-bold rounded-md">
-                <img src="../assets/logos/logo-meal.png" alt="Logo Meal" class="w-6 h-6 mr-2">
-                Voir toutes les recettes
+    <header class="w-full bg-white py-3 px-6 flex items-center justify-between shadow-md">
+        <a href="../index.html">
+            <img src="../assets/logos/logo-transparent-svg.svg" alt="logo" class="h-12 md:h-16">
+        </a>
+
+        <nav class="hidden md:flex flex-1 justify-center gap-10 text-lg font-bold">
+            <a href="planning.html" class="hover:text-[#B9625D] transition">Planning</a>
+            <a href="favoris.html" class="hover:text-[#B9625D] transition">Favoris</a>
+            <a href="recette.html" class="hover:text-[#B9625D] transition">Recettes</a>
+            <a href="course.html" class="hover:text-[#B9625D] transition">Courses</a>
+        </nav>
+
+        <a href="#" class="hidden md:flex bg-orange-400 text-white px-4 py-2 rounded-xl hover:bg-orange-300 transition shadow-md items-center">
+            <img src="../assets/logos/logo-meal.png" class="h-6 w-6 mr-2" alt="logo-meal">
+            Voir toutes les recettes
+        </a>
+        
+        <nav class="md:hidden flex flex-col items-center gap-3 mt-3 text-lg font-bold">
+            <a href="#" class="hover:text-[#B9625D] transition">Planning</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Favoris</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Recettes</a>
+            <a href="#" class="hover:text-[#B9625D] transition">Courses</a>
+            <a href="views/course.html" class="bg-orange-400 text-white px-4 py-2 rounded-xl hover:bg-orange-300 transition shadow-md">
+                Voir recettes
             </a>
-        </div>
+        </nav>
     </header>
+
 
     <!-- Hero Section -->
     <main>

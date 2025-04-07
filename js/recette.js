@@ -27,7 +27,7 @@ function afficherRecette() {
     const container = document.getElementById('recettes-container');
 
     barreRecherche.addEventListener('keyup', function () {
-        const recette = barreRecherche.value.trim(); // Supprime les espaces inutiles
+        const recette = barreRecherche.value.trim();
 
         const resultat = recettes.filter(item => 
             item.nom.toLowerCase().includes(recette.toLowerCase())
@@ -48,14 +48,12 @@ function afficherRecette() {
         suggestionsContainer.innerHTML = suggestion;
     });
 
-    // Quand on clique sur une suggestion
     suggestionsContainer.addEventListener('click', function (event) {
         if (event.target.tagName === 'SPAN') {
             const selectedRecette = event.target.getAttribute('data-nom');
             suggestionsContainer.innerHTML = '';
             barreRecherche.value = '';
 
-            // Recherche la recette sélectionnée dans les données
             const recetteSelectionnee = recettes.find(item => item.nom === selectedRecette);
 
             if (recetteSelectionnee) {

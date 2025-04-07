@@ -1,20 +1,17 @@
 function afficherFavoris() {
     const container = document.getElementById('recettes-favoris');
-    //const dataIndex = this.getAttribute('data-index');
     let recettesFavoris = JSON.parse(localStorage.getItem('recettes')) || [];
-
-    //console.log('Recettes enregistrées :', recettesFavoris);
-
 
     container.innerHTML = '';
 
     if (recettesFavoris.length === 0) {
         container.innerHTML = '<p class="text-center w-full pt-4">Aucune recette enregistrée.</p>';
         return;
-    }else{
-        recettesFavoris.forEach(recette => {
+    } else {
+        recettesFavoris.forEach((recette, index) => {
             const recetteDiv = document.createElement('div');
             recetteDiv.classList.add('recette');
+            recetteDiv.setAttribute('data-index', index);
             recetteDiv.innerHTML = ` 
             <div class="relative h-64 overflow-hidden">
                 <img 
@@ -40,8 +37,48 @@ function afficherFavoris() {
 
             container.appendChild(recetteDiv);
         });
+        afficherRecettes();
     }
 }
+
+function afficherRecettes() {
+    document.querySelectorAll('.recette').forEach(recette => {
+        recette.addEventListener('click', function() {
+            const recetteIndex = this.getAttribute('data-index'); 
+            let recettes = JSON.parse(localStorage.getItem('recettes')) || [];
+            const recetteAffichee = recettes[recetteIndex];
+
+            const informationsRecette = document.getElementById("informations-recette");
+            const titre = document.getElementById("titre-recette");
+            const temps = document.getElementById("temps-recette");
+            const preparation = document.getElementById("preparation-recette");
+            const ingredients = document.getElementById("ingredients-recette");
+
+            // Affichage des informations
+            titre.textContent = recetteAffichee.nom;
+            temps.textContent = `${recetteAffichee.temps_preparation}`;
+            preparation.innerHTML = recetteAffichee.etapes
+                .map(etape => `<li class="py-2">${etape}</li>`)
+                .join("");
+
+            ingredients.innerHTML = '<ul class="flex flex-row gap-4 pt-5">' + recetteAffichee.ingredients
+                .map(ingredient => `<li class="bg-red-400 p-2 rounded-lg text-brown-600">${ingredient.nom} (${ingredient.quantite})</li>`)
+                .join("") + "</ul>";
+
+            informationsRecette.classList.remove("hidden");
+
+            console.log("Recette cliquée : " + recetteAffichee.nom);
+        });
+    });
+
+    document.querySelectorAll("#fermer-informations, #fermer-informations-croix")
+        .forEach(element => {
+            element.addEventListener("click", () => {
+                document.getElementById("informations-recette").classList.add("hidden");
+            });
+        });
+}
+
 
 function afficherPopup() {
     const popup = document.getElementById("popup");
@@ -63,6 +100,7 @@ function supprimerFavoris(){
 
     document.querySelectorAll('.recette-footer button').forEach(button => {
         button.addEventListener('click', function() {
+            event.stopPropagation();
             const recetteNom = this.getAttribute('data-nom');
             let recettesFavoris = JSON.parse(localStorage.getItem('recettes')) || [];
 
