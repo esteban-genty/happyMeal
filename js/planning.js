@@ -9,52 +9,32 @@ function savePlanning(planning) {
     localStorage.setItem("planning", JSON.stringify(planning));
 }
 
-function addToPlanning(recipeName, selectElement) {
-    let day = selectElement.value;
-    if (!day) return;
-    day = day.toLowerCase();
-
-    let planning = getPlanning();
-    if (!planning[day]) {
-        planning[day] = [];
-    }
-
-    if (!planning[day].includes(recipeName)) {
-        planning[day].push(recipeName);
-    }
-
-    savePlanning(planning);
-    alert(`Recette ajoutée au planning du ${day}`);
-    loadPlanning();
-}
 
 async function loadPlanning() {
     try {
-        let res = await fetch("../data/recettes.json");
-        let data = await res.json();
-        let allMeals = data.recettes;
+        let planning = getPlanning();  
 
         document.querySelectorAll('.day').forEach(dayDiv => {
             const ul = dayDiv.querySelector("ul");
             ul.innerHTML = ""; 
         });
 
-        let planning = getPlanning();
-
         for (let day in planning) {
             let formattedDay = day.charAt(0).toUpperCase() + day.slice(1); 
             let dayContainer = document.querySelector(`.day[data-day="${formattedDay}"] ul`);
             if (!dayContainer) continue;
 
+            let recettes = JSON.parse(localStorage.getItem('recettes')) || [];
+            
             dayContainer.innerHTML = planning[day].map(nom => {
-                return `<li>${nom} <button onclick="removeFromPlanning('${day}', '${nom}')">❌</button></li>`;
+                let recette = recettes.find(r => r.nom === nom);
+                return recette ? `<li>${recette.nom} <button onclick="removeFromPlanning('${day}', '${recette.nom}')">❌</button></li>` : '';
             }).join('');
         }
     } catch (error) {
         console.error("Erreur :", error);
     }
 }
-
 
 function removeFromPlanning(day, recipeName) {
     let planning = getPlanning();
