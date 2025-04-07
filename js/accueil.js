@@ -92,10 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const ingredientsContainer = document.getElementById("modal-ingredients");
         ingredientsContainer.innerHTML = "";
 
-      
-
-
-
         ingredients.split(", ").forEach(ing => {
             const btn = document.createElement("button");
             btn.className = "bg-[#A35D52] text-white px-4 py-2 rounded-lg m-1 ";
