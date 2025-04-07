@@ -34,61 +34,83 @@ function afficherFavoris() {
             <button type="button" class="favoris-btn bg-orange-300 text-white px-4 py-2 rounded-md font-bold hover:bg-orange-400 transition-colors" data-nom="${recette.nom}">Supprimer</button>
         </div>
         <div class="planning bg-gray-100 pb-4">
-            <select id="planning-select" name="jours" class="mb-4 w-full p-2 border border-gray-300 rounded-md">
-                <option value="jour">Sélectionner un jour</option>
-                <option value="lundi">Lundi</option>
-                <option value="mardi">Mardi</option>
-                <option value="mercredi">Mercredi</option>
-                <option value="jeudi">Jeudi</option>
-                <option value="vendredi">Vendredi</option>
-                <option value="samedi">Samedi</option>
-                <option value="dimanche">Dimanche</option>
-            </select>
-                <button type="button" class="planning-btn w-full bg-blue-400 text-white px-4 py-2 rounded-md font-bold hover:bg-blue-500 transition-colors" planning="${recette.nom}">+ Planning</button> 
-            </div>
+            <div class="planning">
+                <select class="planning-select w-full my-2 py-2 rounded-lg" name="jours">
+                    <option value="jour">Sélectionner un jour</option>
+                    <option value="lundi">Lundi</option>
+                    <option value="mardi">Mardi</option>
+                    <option value="mercredi">Mercredi</option>
+                    <option value="jeudi">Jeudi</option>
+                    <option value="vendredi">Vendredi</option>
+                    <option value="samedi">Samedi</option>
+                    <option value="dimanche">Dimanche</option>
+                </select>
+            <button type="button" class="planning-btn bg-blue-400 w-full text-white px-4 py-2 rounded-md font-bold hover:bg-blue-500 transition-colors" planning="${recette.nom}">+ Planning</button>
+        </div>
+
             `;
 
             container.appendChild(recetteDiv);
         });
-        planning();
         afficherRecettes();
     }
 }
 
 function planning() {
     const planningBtn = document.querySelectorAll('.planning-btn');
-    const selectPlanning = document.getElementById('planning-select');
 
     planningBtn.forEach(button => {
         button.addEventListener('click', function(event) {
             event.stopPropagation();
-            
-            if(selectPlanning.value === 'jour') {
-                alert("Veuillez sélectionner un jour.");
+
+            const parentPlanning = this.closest('.planning');
+            const selectPlanning = parentPlanning ? parentPlanning.querySelector('.planning-select') : null;
+
+
+            if (!selectPlanning) {
+                console.error('Select non trouvé pour ce bouton.');
                 return;
-            }else{
-                const recetteNom = this.getAttribute('planning');
-                let planningRecettes = JSON.parse(localStorage.getItem('planning')) || {};
-
-                if (!planningRecettes[selectPlanning.value]) {
-                    planningRecettes[selectPlanning.value] = [];
-                }
-
-                planningRecettes[selectPlanning.value].push(recetteNom);
-                localStorage.setItem('planning', JSON.stringify(planningRecettes));
-
-                alert(`Recette "${recetteNom}" ajoutée au ${selectPlanning.value}`);
-                selectPlanning.value = 'jour';
             }
 
+            console.log(selectPlanning.value);
+
+            if (selectPlanning.value === 'jour') {
+                alert("Veuillez sélectionner un jour.");
+                return;
+            }
+
+            const recetteNom = this.getAttribute('planning');
+            let planningRecettes = JSON.parse(localStorage.getItem('planning')) || {};
+
+            if (!planningRecettes[selectPlanning.value]) {
+                planningRecettes[selectPlanning.value] = [];
+            }
+
+            planningRecettes[selectPlanning.value].push(recetteNom);
+            localStorage.setItem('planning', JSON.stringify(planningRecettes));
+
+            alert(`Recette "${recetteNom}" ajoutée au ${selectPlanning.value}`);
+            selectPlanning.value = 'jour'; 
         });
     });
 
-    selectPlanning.addEventListener('click', function(event) {
-        event.stopPropagation();
+    document.querySelectorAll('.planning-select').forEach(select => {
+        select.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
     });
+
+
+    // Ajouter une écoute de l'événement click sur le select pour empêcher la propagation
+    document.querySelectorAll('.planning-select').forEach(select => {
+        select.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    });
+
     afficherRecettes();
 }
+
 
 
 function afficherRecettes() {
