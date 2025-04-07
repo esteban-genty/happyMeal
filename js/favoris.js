@@ -1,6 +1,7 @@
 function afficherFavoris() {
     const container = document.getElementById('recettes-favoris');
-    let recettesFavoris = JSON.parse(localStorage.getItem('recettes'));
+    //const dataIndex = this.getAttribute('data-index');
+    let recettesFavoris = JSON.parse(localStorage.getItem('recettes')) || [];
 
     //console.log('Recettes enregistrées :', recettesFavoris);
 
